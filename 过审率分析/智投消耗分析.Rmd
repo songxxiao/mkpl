@@ -1,0 +1,56 @@
+---
+title: '智投消耗分析'
+output:
+  html_document:
+    toc: false
+    highlight: tango
+    theme: united
+    css: styles.css
+    number_sections: true
+---
+
+注意在`campaign`中`day_budget=0`的是预算不限的情况
+
+```sql
+select a.date as date
+      , a.company_id
+      , cost
+      , day_budget
+      , cost / day_budget as cost_rate
+     -- , sum(day_budget) as day_budget
+     -- , sum(cost) as cost
+from (
+select date
+     , company_id
+     , sum(cost) as cost
+from  makepolo.creative_report
+where create_channel =1
+group by 1, 2
+) a left join (
+select date_format(create_time,'%Y-%m-%d') as date
+     ,company_id
+     ,sum(day_budget) as day_budget
+from makepolo.campaign
+where day_budget>0
+group by 1,2
+-- order by 1 desc
+)budget on budget.company_id = a.company_id and budget.date = a.date
+where day_budget>0 -- 筛选预算>0的
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
