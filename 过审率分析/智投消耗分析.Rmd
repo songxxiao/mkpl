@@ -163,10 +163,64 @@ where budget_type =3
 order by 6 desc
 ```
 
+```sql
+select a.campaign_id
+      , cost
+      , day_budget
+      , cost / day_budget as cost_rate
+from (
+select campaign_id
+     , sum(cost) as cost
+from  makepolo.creative_report
+where create_channel =1 and date>='2020-10-13'
+  and date<='2020-10-13'
+group by 1
+) a left join (
+select id as campaign_id
+     ,sum(day_budget) as day_budget
+from makepolo.campaign
+where day_budget>0
+  and create_time>='2020-10-13 00:00:00'
+  and create_time<='2020-10-13 23:59:59'
+group by 1
+-- order by 1 desc
+)budget on budget.campaign_id = a.campaign_id
+where day_budget>0
+order by 4 desc
+```
 
+对比是否使用api的消耗占比的不同
 
-
-
+```sql
+select create_channel
+       , sum(cost) / sum(day_budget) as '消耗/预算'
+from (
+select a.ad_unit_id
+      , a.date as dat
+     , budget_type
+      , cost
+      , day_budget
+      , cost / day_budget as '消耗/预算'
+      , create_channel
+from (
+select date
+     , ad_unit_id
+     , create_channel
+     , sum(cost) as cost
+from  makepolo.creative_report
+where date='2020-10-19'
+group by 1,2,3
+) a left join (
+select id as ad_unit_id
+     , day_budget
+     , budget_type
+from makepolo.ad_unit
+where day_budget>0 and day_budget<4000000000
+  and budget_type=3 -- 删除不限预算的情况
+)budget on a.ad_unit_id = budget.ad_unit_id
+where budget_type =3
+    ) b group by 1
+```
 
 
 
