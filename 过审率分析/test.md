@@ -1,52 +1,19 @@
----
-title: '智投消耗分析'
-author:  ''
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
+Untitled
+================
 
 注意在`campaign`中`day_budget=0`的是预算不限的情况
 
-```sql
--- campaign.budget_type=1 不限预算
--- campaign.budget_type=2 统一预算
--- campaign.budget_type=3 每日预算
+    campaign.budget_type=1 不限预算
+    campaign.budget_type=2 统一预算
+    campaign.budget_type=3 每日预算
 
-select budget_type, count(day_budget) as '数量'
-from makepolo.campaign
-group by 1
-order by 1
-```
+| budget\_type | 数量     |
+| :----------- | :----- |
+| 1            | 566355 |
+| 2            | 51771  |
+| 3            | 2720   |
 
-| budget\_type | 数量 |
-| :--- | :--- |
-| 1 | 566355 |
-| 2 | 51771 |
-| 3 | 2720 |
-
-
-
-```sql
-select budget_type as '预算类型',
-       count(*)
-from makepolo.ad_unit
-group by 1
-order by 1
-```
-
-| 预算类型 | count(*) |
-| :--- | :--- |
-| 1 | 5741691 |
-| 2 | 294393 |
-| 3 | 27304 |
-
-
-
-```sql
+``` sql
 select a.date as date
       , a.company_id
       , cost
@@ -75,7 +42,7 @@ where day_budget>0 -- 筛选预算>0的
 
 从以上代码发现，消耗远大于预算。下面不分日期查询，而是筛选一段较长的时间。
 
-```sql
+``` sql
 select a.company_id
       , cost
       , day_budget
@@ -104,7 +71,7 @@ where day_budget>0
 
 下面使用`vendor_campaign_id`来进行聚合。
 
-```sql
+``` sql
 select a.vendor_campaign_id
       , cost
       , day_budget
@@ -130,50 +97,3 @@ where day_budget>0
 ```
 
 发现消耗远小于预算。
-
-按`ad_unit_id`进行计算：(2020/10/20有可能正确的分析)
-
-```sql
-select a.ad_unit_id
-      , a.date as dat
-     , budget_type
-      , cost
-      , day_budget
-      , cost / day_budget as '消耗/预算'
-from (
-select date
-     , ad_unit_id
-     , sum(cost) as cost
-from  makepolo.creative_report
-where create_channel =1 and date='2020-10-19'
-group by 1,2
-) a left join (
-select id as ad_unit_id
-     , day_budget
-     , budget_type
-from makepolo.ad_unit
-where day_budget>0 and day_budget<4000000000
- --  and create_time>='2020-10-07 00:00:00'
- --  and create_time<='2020-10-07 23:59:59'
-  and budget_type=3 -- 删除不限预算的情况
--- group by 1
--- order by 1 desc
-)budget on a.ad_unit_id = budget.ad_unit_id
-where budget_type =3
-order by 6 desc
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,15 +1,13 @@
 ---
-title: "过审率记录"
-date: " "
-output:
-  html_document:
-    toc: false
-    highlight: pygments
-    theme: united
-    css: styles.css
-    number_sections: false
+title: "过审率分析"
+author: " "
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
 
 
 1. 从视频数，图片数，文案数 来重新计算过审率

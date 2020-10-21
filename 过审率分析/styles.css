@@ -8,23 +8,19 @@ code, kbd, pre, samp { /*change code trunk style*/
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 { 
-    font-family: Georgia,"SimSun","Source Han Serif SC","Source Han Serif CN","Source Han Serif TC","Source Han Serif TW","Source Han Serif","Songti SC","Microsoft YaHei", serif;
+    font-family:-apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,'SimSun',Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
     font-weight: normal;
     line-height: 1.1;
     color: inherit; 
 }
 
 body {
-    font-family:"Palatino Linotype","Palatino LT STD",Optima-Regular, Optima, "SimSun", PingFangTC-light, "PingFang SC", Cambria, Cochin, Georgia, Times, "Times New Roman", serif ;
-    font-size: 16px;
+    font-family:/*"Palatino Linotype","Palatino LT STD",*/-apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,'SimSun',Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
+    /*font-size: 16px;*/
     line-height: 1.42857143;
     color: #333333;
     background-color: #ffffff;
 }
-
-
-
-
 
 
 
