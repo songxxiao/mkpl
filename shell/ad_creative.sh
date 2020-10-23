@@ -23,6 +23,10 @@ select dat
      , company_id
      ,  count(id) as creative_cnt
      ,  count(case when create_channel=1 then id end) as creative_cnt_api
+     , count(if(vendor_status not in (0, 11, 12, 41, 42, 55, 10001, 10004, 10003) and create_channel=1,id,null)) as pass_cnt_api
+     , count(if(vendor_status not in (0, 11, 41,10001, 10004, 10003) and create_channel=1,id,null)) as pass_cnt_api_div
+     , count(if(vendor_status not in (0, 11, 12, 41, 42, 55, 10001, 10004, 10003),id,null)) as pass_cnt
+     , count(if(vendor_status not in (0, 11, 41,10001, 10004, 10003),id,null)) as pass_cnt_div
 from (
       select date_format(create_time,'%Y-%m-%d') as dat
            , id

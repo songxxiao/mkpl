@@ -528,6 +528,39 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb8-26"><a href="#cb8-26" aria-hidden="true"></a>)budget <span class="kw">on</span> a.ad_unit_id <span class="op">=</span> budget.ad_unit_id</span>
 <span id="cb8-27"><a href="#cb8-27" aria-hidden="true"></a><span class="kw">where</span> budget_type <span class="op">=</span><span class="dv">3</span></span>
 <span id="cb8-28"><a href="#cb8-28" aria-hidden="true"></a>    ) b <span class="kw">group</span> <span class="kw">by</span> <span class="dv">1</span></span></code></pre></div>
+<p>2020/10/21</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="kw">select</span> dat <span class="kw">as</span> <span class="st">&#39;日期&#39;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>     , ad_unit_id</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>       , <span class="cf">if</span>(create_channel<span class="op">=</span><span class="dv">1</span>, <span class="st">&#39;API&#39;</span>,<span class="st">&#39;官方后台&#39;</span>) <span class="kw">as</span> <span class="st">&#39;创建平台&#39;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>       , <span class="fu">sum</span>(<span class="kw">cost</span>)<span class="op">/</span><span class="dv">10000</span> <span class="kw">as</span> <span class="st">&#39;消耗&#39;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a>       , <span class="fu">sum</span>(day_budget)<span class="op">/</span><span class="dv">1000</span> <span class="kw">as</span> <span class="st">&#39;日预算&#39;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a>       , <span class="fu">sum</span>(<span class="kw">cost</span>) <span class="op">/</span> <span class="fu">sum</span>(day_budget) <span class="op">/</span> <span class="dv">10</span> <span class="kw">as</span> <span class="st">&#39;消耗/日预算&#39;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a><span class="kw">from</span> (</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a><span class="kw">select</span> a.ad_unit_id</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a>      , a.<span class="dt">date</span> <span class="kw">as</span> dat</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a>      , budget_type</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a>      , <span class="kw">cost</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true"></a>      , day_budget</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true"></a>      , <span class="kw">cost</span> <span class="op">/</span> day_budget <span class="kw">as</span> <span class="st">&#39;消耗/预算&#39;</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true"></a>      , create_channel</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true"></a><span class="kw">from</span> (</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true"></a><span class="kw">select</span> <span class="dt">date</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true"></a>     , ad_unit_id</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true"></a>     , create_channel</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true"></a>     , <span class="fu">sum</span>(<span class="kw">cost</span>) <span class="kw">as</span> <span class="kw">cost</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true"></a><span class="kw">from</span>  makepolo.creative_report</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true"></a><span class="kw">where</span> <span class="dt">date</span><span class="op">&gt;=</span><span class="st">&#39;2020-10-01&#39;</span> <span class="kw">and</span> <span class="dt">date</span><span class="op">&lt;=</span><span class="st">&#39;2020-10-20&#39;</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true"></a><span class="kw">group</span> <span class="kw">by</span> <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true"></a>) a <span class="kw">left</span> <span class="kw">join</span> (</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true"></a><span class="kw">select</span> <span class="kw">id</span> <span class="kw">as</span> ad_unit_id</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true"></a>     , day_budget</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true"></a>     , budget_type</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true"></a><span class="kw">from</span> makepolo.ad_unit</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true"></a><span class="kw">where</span> day_budget<span class="op">&gt;</span><span class="dv">0</span> <span class="kw">and</span> day_budget<span class="op">&lt;</span><span class="dv">4000000000</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true"></a>)budget <span class="kw">on</span> a.ad_unit_id <span class="op">=</span> budget.ad_unit_id</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true"></a><span class="kw">where</span> budget_type <span class="op">=</span><span class="dv">2</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true"></a>    ) b <span class="kw">group</span> <span class="kw">by</span> <span class="dv">1</span>, <span class="dv">2</span>,<span class="dv">3</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true"></a><span class="kw">order</span> <span class="kw">by</span> <span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span> <span class="kw">desc</span></span></code></pre></div>
 
 
 

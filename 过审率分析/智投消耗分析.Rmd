@@ -224,10 +224,39 @@ where budget_type =3
 
 
 
+2020/10/21
 
-
-
-
-
-
-
+```sql
+select dat as '日期'
+     , ad_unit_id
+       , if(create_channel=1, 'API','官方后台') as '创建平台'
+       , sum(cost)/10000 as '消耗'
+       , sum(day_budget)/1000 as '日预算'
+       , sum(cost) / sum(day_budget) / 10 as '消耗/日预算'
+from (
+select a.ad_unit_id
+      , a.date as dat
+      , budget_type
+      , cost
+      , day_budget
+      , cost / day_budget as '消耗/预算'
+      , create_channel
+from (
+select date
+     , ad_unit_id
+     , create_channel
+     , sum(cost) as cost
+from  makepolo.creative_report
+where date>='2020-10-01' and date<='2020-10-20'
+group by 1,2,3
+) a left join (
+select id as ad_unit_id
+     , day_budget
+     , budget_type
+from makepolo.ad_unit
+where day_budget>0 and day_budget<4000000000
+)budget on a.ad_unit_id = budget.ad_unit_id
+where budget_type =2
+    ) b group by 1, 2,3
+order by 2,3,1 desc
+```
