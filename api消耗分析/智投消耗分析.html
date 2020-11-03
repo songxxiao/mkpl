@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-<meta name="date" content="2020-10-21" />
+<meta name="date" content="2020-10-27" />
 
 <title>智投消耗分析</title>
 
@@ -314,7 +314,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">智投消耗分析</h1>
 <h4 class="author"></h4>
-<h4 class="date">2020-10-21</h4>
+<h4 class="date">2020-10-27</h4>
 
 
 
@@ -561,6 +561,39 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb9-30"><a href="#cb9-30" aria-hidden="true"></a><span class="kw">where</span> budget_type <span class="op">=</span><span class="dv">2</span></span>
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true"></a>    ) b <span class="kw">group</span> <span class="kw">by</span> <span class="dv">1</span>, <span class="dv">2</span>,<span class="dv">3</span></span>
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true"></a><span class="kw">order</span> <span class="kw">by</span> <span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span> <span class="kw">desc</span></span></code></pre></div>
+<div id="个别案例分析" class="section level1">
+<h1>个别案例分析</h1>
+<div id="api-创建创意占比高消耗低" class="section level2">
+<h2>api 创建创意占比高，消耗低</h2>
+<p>大中型</p>
+<p>51多盟： 绑定账户数203<br />
+大客户。通过api创建创意占比极高，占90%左右，但是通过api消耗不够高，仅占60%左右。<br />
+总消耗在200w左右 api消耗在80w左右</p>
+<p>26执象广告 绑定账户数121<br />
+通过api创建创意比波动下降，api消耗占比一直非常低，在10%以下。 但是消耗数量级很高，总消耗在70w左右，api消耗在10w以下</p>
+<p>25东莞快牛 绑定账户数320 总消耗在10w左右，api日消耗在10w</p>
+<p>31杭州澳比 绑定账户数152 日总消耗在1w左右，api在5k左右</p>
+<p>57芜湖 绑定帐户数39</p>
+<p>api消耗为0：新创建的账户<br />
+88广州佳创 绑定账户数5<br />
+82上海效易 绑定账户数0</p>
+</div>
+<div id="api-创建创意占比高消耗高" class="section level2">
+<h2>api 创建创意占比高，消耗高</h2>
+<p>中型用户</p>
+<p>创建创意占比高，并且消耗也高的案例(占比80%以上)，比较优质的客户。此类用户注册时间早，总量高，趋势较稳定。</p>
+<p>58 广州易双 绑定账户数233 总消耗在20w左右，api在13w左右 38 河南申鼠 绑定账户数69 总消耗在1w左右 34 宁波麦粒 绑定账户数366 总消耗在30w左右 33 杭州幻鸟 绑定账户数480 总消耗在9w左右 32 深圳天游 绑定账户数69 总消耗8w左右 28 上海德绚 绑定账户数143 总消耗24w左右 23 广州天拓 绑定账户数69 总消耗22w左右 10月1日消耗大幅度突起 5 晋拓 绑定账户数367 总消耗142w左右</p>
+</div>
+<div id="api-创建创意占比低消耗低" class="section level2">
+<h2>api 创建创意占比低，消耗低</h2>
+<p>api消耗之前不是0逐渐变为0的情况，客户可能会流失。 获取电商下单过审率整体较差。</p>
+<p>59宜都 绑定账户数15 消耗在2w左右 39新效 绑定账户数10 总消耗2w左右，api消耗5k以下</p>
+</div>
+<div id="api创建创意占比低消耗高" class="section level2">
+<h2>api创建创意占比低，消耗高</h2>
+<p>无</p>
+</div>
+</div>
 
 
 
