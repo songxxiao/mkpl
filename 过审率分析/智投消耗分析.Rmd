@@ -1,0 +1,333 @@
+---
+title: '智投消耗分析'
+author:  ''
+date: '`r Sys.Date()`'
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+注意在`campaign`中`day_budget=0`的是预算不限的情况
+
+```sql
+-- campaign.budget_type=1 不限预算
+-- campaign.budget_type=2 统一预算
+-- campaign.budget_type=3 每日预算
+
+select budget_type, count(day_budget) as '数量'
+from makepolo.campaign
+group by 1
+order by 1
+```
+
+| budget\_type | 数量 |
+| :--- | :--- |
+| 1 | 566355 |
+| 2 | 51771 |
+| 3 | 2720 |
+
+
+
+```sql
+select budget_type as '预算类型',
+       count(*)
+from makepolo.ad_unit
+group by 1
+order by 1
+```
+
+| 预算类型 | count(*) |
+| :--- | :--- |
+| 1 | 5741691 |
+| 2 | 294393 |
+| 3 | 27304 |
+
+
+
+```sql
+select a.date as date
+      , a.company_id
+      , cost
+      , day_budget
+      , cost / day_budget as cost_rate
+     -- , sum(day_budget) as day_budget
+     -- , sum(cost) as cost
+from (
+select date
+     , company_id
+     , sum(cost) as cost
+from  makepolo.creative_report
+where create_channel =1
+group by 1, 2
+) a left join (
+select date_format(create_time,'%Y-%m-%d') as date
+     ,company_id
+     ,sum(day_budget) as day_budget
+from makepolo.campaign
+where day_budget>0
+group by 1,2
+-- order by 1 desc
+)budget on budget.company_id = a.company_id and budget.date = a.date
+where day_budget>0 -- 筛选预算>0的
+```
+
+从以上代码发现，消耗远大于预算。下面不分日期查询，而是筛选一段较长的时间。
+
+```sql
+select a.company_id
+      , cost
+      , day_budget
+      , cost / day_budget as cost_rate
+from (
+select company_id
+     , sum(cost) as cost
+from  makepolo.creative_report
+where create_channel =1   and date>='2020-09-07'
+  and date<='2020-10-13'
+group by 1
+) a left join (
+select company_id
+     ,sum(day_budget) as day_budget
+from makepolo.campaign
+where day_budget>0
+  and create_time>='2020-09-07 00:00:00'
+  and create_time<='2020-10-13 23:59:59'
+group by 1
+-- order by 1 desc
+)budget on budget.company_id = a.company_id
+where day_budget>0
+```
+
+消耗仍然远大于预算。原因是有些公司可能不限预算。
+
+下面使用`vendor_campaign_id`来进行聚合。
+
+```sql
+select a.vendor_campaign_id
+      , cost
+      , day_budget
+      , cost / day_budget as cost_rate
+from (
+select vendor_campaign_id
+     , sum(cost) as cost
+from  makepolo.creative_report
+where create_channel =1 and date>='2020-10-13'
+  and date<='2020-10-13'
+group by 1
+) a left join (
+select vendor_campaign_id
+     ,sum(day_budget) as day_budget
+from makepolo.campaign
+where day_budget>0
+  and create_time>='2020-10-13 00:00:00'
+  and create_time<='2020-10-13 23:59:59'
+group by 1
+-- order by 1 desc
+)budget on budget.vendor_campaign_id = a.vendor_campaign_id
+where day_budget>0
+```
+
+发现消耗远小于预算。
+
+按`ad_unit_id`进行计算：(2020/10/20有可能正确的分析)
+
+```sql
+select a.ad_unit_id
+      , a.date as dat
+     , budget_type
+      , cost
+      , day_budget
+      , cost / day_budget as '消耗/预算'
+from (
+select date
+     , ad_unit_id
+     , sum(cost) as cost
+from  makepolo.creative_report
+where create_channel =1 and date='2020-10-19'
+group by 1,2
+) a left join (
+select id as ad_unit_id
+     , day_budget
+     , budget_type
+from makepolo.ad_unit
+where day_budget>0 and day_budget<4000000000
+ --  and create_time>='2020-10-07 00:00:00'
+ --  and create_time<='2020-10-07 23:59:59'
+  and budget_type=3 -- 删除不限预算的情况
+-- group by 1
+-- order by 1 desc
+)budget on a.ad_unit_id = budget.ad_unit_id
+where budget_type =3
+order by 6 desc
+```
+
+```sql
+select a.campaign_id
+      , cost
+      , day_budget
+      , cost / day_budget as cost_rate
+from (
+select campaign_id
+     , sum(cost) as cost
+from  makepolo.creative_report
+where create_channel =1 and date>='2020-10-13'
+  and date<='2020-10-13'
+group by 1
+) a left join (
+select id as campaign_id
+     ,sum(day_budget) as day_budget
+from makepolo.campaign
+where day_budget>0
+  and create_time>='2020-10-13 00:00:00'
+  and create_time<='2020-10-13 23:59:59'
+group by 1
+-- order by 1 desc
+)budget on budget.campaign_id = a.campaign_id
+where day_budget>0
+order by 4 desc
+```
+
+对比是否使用api的消耗占比的不同
+
+```sql
+select create_channel
+       , sum(cost) / sum(day_budget) as '消耗/预算'
+from (
+select a.ad_unit_id
+      , a.date as dat
+     , budget_type
+      , cost
+      , day_budget
+      , cost / day_budget as '消耗/预算'
+      , create_channel
+from (
+select date
+     , ad_unit_id
+     , create_channel
+     , sum(cost) as cost
+from  makepolo.creative_report
+where date='2020-10-19'
+group by 1,2,3
+) a left join (
+select id as ad_unit_id
+     , day_budget
+     , budget_type
+from makepolo.ad_unit
+where day_budget>0 and day_budget<4000000000
+  and budget_type=3 -- 删除不限预算的情况
+)budget on a.ad_unit_id = budget.ad_unit_id
+where budget_type =3
+    ) b group by 1
+```
+
+
+
+2020/10/21
+
+```sql
+select dat as '日期'
+     , ad_unit_id
+       , if(create_channel=1, 'API','官方后台') as '创建平台'
+       , sum(cost)/10000 as '消耗'
+       , sum(day_budget)/1000 as '日预算'
+       , sum(cost) / sum(day_budget) / 10 as '消耗/日预算'
+from (
+select a.ad_unit_id
+      , a.date as dat
+      , budget_type
+      , cost
+      , day_budget
+      , cost / day_budget as '消耗/预算'
+      , create_channel
+from (
+select date
+     , ad_unit_id
+     , create_channel
+     , sum(cost) as cost
+from  makepolo.creative_report
+where date>='2020-10-01' and date<='2020-10-20'
+group by 1,2,3
+) a left join (
+select id as ad_unit_id
+     , day_budget
+     , budget_type
+from makepolo.ad_unit
+where day_budget>0 and day_budget<4000000000
+)budget on a.ad_unit_id = budget.ad_unit_id
+where budget_type =2
+    ) b group by 1, 2,3
+order by 2,3,1 desc
+```
+
+# 个别案例分析
+
+## api 创建创意占比高，消耗低
+
+大中型
+
+51多盟：  绑定账户数203  
+大客户。通过api创建创意占比极高，占90%左右，但是通过api消耗不够高，仅占60%左右。  
+总消耗在200w左右  api消耗在80w左右
+
+
+26执象广告   绑定账户数121  
+通过api创建创意比波动下降，api消耗占比一直非常低，在10%以下。 
+但是消耗数量级很高，总消耗在70w左右，api消耗在10w以下
+
+25东莞快牛   绑定账户数320 总消耗在10w左右，api日消耗在10w
+
+31杭州澳比  绑定账户数152 日总消耗在1w左右，api在5k左右
+
+
+
+57芜湖   绑定帐户数39  
+
+
+api消耗为0：新创建的账户   
+88广州佳创  绑定账户数5  
+82上海效易  绑定账户数0  
+
+## api 创建创意占比高，消耗高
+
+中型用户
+
+创建创意占比高，并且消耗也高的案例(占比80%以上)，比较优质的客户。此类用户注册时间早，总量高，趋势较稳定。  
+
+58 广州易双   绑定账户数233  总消耗在20w左右，api在13w左右
+38 河南申鼠   绑定账户数69   总消耗在1w左右
+34 宁波麦粒   绑定账户数366   总消耗在30w左右
+33 杭州幻鸟   绑定账户数480  总消耗在9w左右
+32 深圳天游   绑定账户数69   总消耗8w左右
+28 上海德绚   绑定账户数143  总消耗24w左右
+23 广州天拓   绑定账户数69   总消耗22w左右 10月1日消耗大幅度突起
+5 晋拓        绑定账户数367  总消耗142w左右
+
+## api 创建创意占比低，消耗低
+
+api消耗之前不是0逐渐变为0的情况，客户可能会流失。
+获取电商下单过审率整体较差。
+
+59宜都    绑定账户数15   消耗在2w左右
+39新效    绑定账户数10   总消耗2w左右，api消耗5k以下
+
+## api创建创意占比低，消耗高
+
+无
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

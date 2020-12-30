@@ -1,0 +1,151 @@
+[
+    {
+        "fieldName": "share_count",
+        "expression": "",
+        "method": "sum"
+    },
+    {
+        "fieldName": "comment_count",
+        "expression": "",
+        "method": "sum"
+    },
+    {
+        "fieldName": "like_count",
+        "expression": "",
+        "method": "sum"
+    },
+    {
+        "fieldName": "add_follower_count",
+        "expression": "",
+        "method": "sum"
+    },
+    {
+        "fieldName": "complain_count",
+        "expression": "",
+        "method": "sum"
+    },
+    {
+        "fieldName": "negative_count",
+        "expression": "",
+        "method": "sum"
+    },
+    {
+        "fieldName": "hate_count",
+        "expression": "",
+        "method": "sum"
+    },
+    {
+        "fieldName": "total_play",
+        "expression": "",
+        "method": "sum"
+    },
+    {
+        "fieldName": "valid_play",
+        "expression": "sum(play_25_feed_break1)/sum(total_play1)",
+        "method": "sum"
+    },
+    {
+        "fieldName": "play_3s_rate_ks",
+        "expression": "sum(play_3s_count1)/sum(content_impression1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_3s_rate_tt",
+        "expression": "sum(play_3s_count1)/sum(total_play1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_5s_rate_ks",
+        "expression": "sum(play_5s_count1)/sum(content_impression1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_5s_rate_tt",
+        "expression": "sum(play_5s_count1)/sum(total_play1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_end_rate_ks",
+        "expression": "sum(play_end_count1)/sum(content_impression1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_5s_rate_tt",
+        "expression": "sum(play_end_count1)/sum(total_play1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_25_rate",
+        "expression": "sum(play_25_feed_break1)/sum(total_play1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_50_rate",
+        "expression": "sum(play_75_feed_break1)/sum(total_play1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_75_rate",
+        "expression": "sum(play_100_feed_break1)/sum(total_play1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_100_rate",
+        "expression": "sum(play_100_feed_break1)/sum(total_play1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "click",
+        "expression": "",
+        "method": "sum"
+    },
+    {
+        "fieldName": "click_rate",
+        "expression": "sum(click1) / sum(content_impression1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "valid_play_rate",
+        "expression": "sum(valid_play1) / sum(content_impression1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "valid_play_cost",
+        "expression": "sum(cost1)/sum(valid_play1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_end_count",
+        "expression": "",
+        "method": "sum"
+    },
+    {
+        "fieldName": "content_click",
+        "expression": "",
+        "method": "sum"
+    },
+    {
+        "fieldName": "convert_count",
+        "method": "sum"
+    },
+    {
+        "fieldName": "convert_rate",
+        "expression": "sum(convert_count1) / sum(click1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "deep_convert_rate",
+        "expression": "sum(deep_convert_count1) / sum(click1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "content_impression_ks",
+        "method": "sum"
+    },
+    {
+        "fieldName": "content_impression_tt",
+        "method": "sum"
+    }
+]
+
+

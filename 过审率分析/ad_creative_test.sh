@@ -16,41 +16,46 @@ then
     . ~/.bash_profile
 fi
 
-function qtt_adx(){
+function query_data(){
 mysql -h${doris_db_host} -u${doris_db_user} -p${doris_db_pwd} -P${doris_db_port} -e "
 select dat
      , vendor_id
      , company_id
-     ,  count(id) as creative_cnt
-     ,  count(case when create_channel=1 then id end) as creative_cnt_api
+     , count(id) as ctv_cnt
+     , count(distinct ad_unit_id) as ad_cnt
+     , count(case when create_channel=1 then id end) as ctv_cnt_api
      , count(if(vendor_status not in (0, 11, 12, 41, 42, 55, 10001, 10004, 10003) and create_channel=1,id,null)) as pass_cnt_api
      , count(if(vendor_status not in (0, 11, 41,10001, 10004, 10003) and create_channel=1,id,null)) as pass_cnt_api_div
      , count(if(vendor_status not in (0, 11, 12, 41, 42, 55, 10001, 10004, 10003),id,null)) as pass_cnt
      , count(if(vendor_status not in (0, 11, 41,10001, 10004, 10003),id,null)) as pass_cnt_div
+     , count(distinct if(sync_status=4, ad_unit_id,null)) as ad_fail_cnt
+     , count(if(sync_status=4, id, null)) as ctv_fail_cnt
 from (
-      select date_format(create_time,'%Y-%m-%d') as dat
-           , id
-           , vendor_id
-           , company_id
-           , create_channel
-           , vendor_status
-      from makepolo.ad_creative
-      where create_time>= concat(date_format(date_sub(now(), interval 32 day), '%Y-%m-%d'),' 00:00:00')
-        and create_time<=concat(date_format(date_sub(now(), interval 1 day), '%Y-%m-%d'),' 23:59:59')
-) a
-group by 1,2,3
-"> /home/da/songxiao/mkpl_creative
+select date_format(create_time, '%Y-%m-%d') as dat
+     , id
+     , ad_unit_id
+     , vendor_id
+     , company_id
+     , create_channel
+     , status
+     , sync_status
+     , vendor_status
+from makepolo.ad_creative
+where create_time >= concat(date_format(date_sub(now(), interval 31 day), '%Y-%m-%d'), ' 00:00:00')
+  and create_time <= concat(date_format(date_sub(now(), interval 1 day), '%Y-%m-%d'), ' 23:59:59')
+    ) a group by 1,2,3
+"> /home/da/songxiao/mkpl_creative_test
 
 }
 
-function db(){
+function dump_data(){
 mysql -h${ad_report_db_host} -u${ad_report_db_user} -p${ad_report_db_pwd} -e "
 -- delete from rpt_fancy.mkpl_creative;
-load data local infile '/home/da/songxiao/mkpl_creative_test' into table rpt_fancy.mkpl_creative ignore 1 lines;
+LOAD DATA LOCAL INFILE '/home/da/songxiao/mkpl_creative_test' INTO TABLE rpt_fancy.mkpl_creative_test;
 "
 }
 
-qtt_adx
-db
+query_data
+dump_data
 
 

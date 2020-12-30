@@ -1,0 +1,118 @@
+[
+    {
+        "key": "optimizer_name",
+        "title": "优化师名称",
+        "subQuery": {}
+    },
+    {
+        "key": "increase_ad",
+        "title": "新增广告数",
+        "subQuery": {}
+    },
+    {
+        "key": "increase_creative",
+        "title": "新增广告数",
+        "subQuery": {}
+    },
+    {
+        "key": "cnt_ad",
+        "title": "曝光广告数",
+        "subQuery": {}
+    },
+    {
+        "key": "cnt_creative",
+        "title": "曝光创意数",
+        "subQuery": {}
+    },
+    {
+        "key": "cost",
+        "title": "消耗金额",
+        "formatter": "0,000.000",
+        "subQuery": {}
+    },
+    {
+        "key": "cost_rebate",
+        "title": "返点后消耗",
+        "formatter": "0,000.000",
+        "subQuery": {}
+    },
+    {
+        "key": "impression",
+        "title": "封面曝光数",
+        "subQuery": {}
+    },
+    {
+        "key": "click",
+        "title": "封面点击数",
+        "subQuery": {}
+    },
+    {
+        "key": "click_rate",
+        "title": "封面点击率",
+        "formatter": "0.00%",
+        "subQuery": {}
+    },
+    {
+        "key": "impression_cost",
+        "title": "平均千次封面曝光花费",
+        "formatter": "0,000.000",
+        "subQuery": {}
+    },
+    {
+        "key": "content_click_cost",
+        "title": "平均点击单价",
+        "formatter": "0,000.000",
+        "subQuery": {}
+    },
+    {
+        "key": "app_activation",
+        "title": "激活数",
+        "subQuery": {}
+    },
+    {
+        "key": "app_activation_rate",
+        "title": "激活率",
+        "formatter": "0.00%",
+        "subQuery": {}
+    },
+    {
+        "key": "app_activation_cost",
+        "title": "激活成本",
+        "formatter": "0,000.000",
+        "subQuery": {}
+    },
+    {
+        "key": "app_event_pay_amount",
+        "title": "付费金额",
+        "formatter": "0,000.000",
+        "subQuery": {}
+    },
+    {
+        "key": "event_pay",
+        "title": "付费次数",
+        "subQuery": {}
+    },
+    {
+        "key": "event_pay_cost",
+        "title": "付费次数成本",
+        "formatter": "0,000.000",
+        "subQuery": {}
+    },
+    {
+        "key": "app_event_next_day_stay_rate",
+        "title": "次日留存率",
+        "formatter": "0.00%",
+        "subQuery": {}
+    },
+    {
+        "key": "form_count",
+        "title": "表单提交数",
+        "subQuery": {}
+    },
+    {
+        "key": "form_count_unit_price",
+        "title": "表单提交单价",
+        "formatter": "0,000.000",
+        "subQuery": {}
+    }
+]

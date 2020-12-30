@@ -1,0 +1,112 @@
+[
+    {
+        "key": "date",
+        "title": "日期",
+        "subQuery": {}
+    },
+    {
+        "key": "designer_name",
+        "title": "设计师名称",
+        "subQuery": {}
+    },
+    {
+        "key": "cnt_video",
+        "title": "上传视频数",
+        "subQuery": {}
+    },
+    {
+        "key": "impression_video",
+        "title": "曝光素材数",
+        "subQuery": {}
+    },
+    {
+        "key": "cost",
+        "title": "消耗金额",
+        "formatter": "0,000.000",
+        "subQuery": {}
+    },
+    {
+        "key": "cost_rebate",
+        "title": "返点后消耗",
+        "formatter": "0,000.000",
+        "subQuery": {}
+    },
+    {
+        "key": "impression",
+        "title": "封面展示数",
+        "subQuery": {}
+    },
+    {
+        "key": "click",
+        "title": "封面点击数",
+        "subQuery": {}
+    },
+    {
+        "key": "cost_impression",
+        "title": "平均千次曝光费用",
+        "formatter": "0,000.000",
+        "subQuery": {}
+    },
+    {
+        "key": "click_cost",
+        "title": "平均点击单价",
+        "formatter": "0,000.000",
+        "subQuery": {}
+    },
+    {
+        "key": "play_3s_rate",
+        "title": "3秒播放率",
+        "formatter": "0.00%",
+        "subQuery": {}
+    },
+    {
+        "key": "play_end_rate",
+        "title": "完播率",
+        "formatter": "0.00%",
+        "subQuery": {}
+    }
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

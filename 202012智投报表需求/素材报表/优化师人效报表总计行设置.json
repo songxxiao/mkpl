@@ -1,0 +1,90 @@
+[
+    {
+        "fieldName": "increase_ad",
+        "method": "sum"
+    },
+    {
+        "fieldName": "increase_creative",
+        "method": "sum"
+    },
+    {
+        "fieldName": "cnt_ad",
+        "method": "sum"
+    },
+    {
+        "fieldName": "cnt_creative",
+        "method": "sum"
+    },
+    {
+        "fieldName": "cost",
+        "method": "sum"
+    },
+    {
+        "fieldName": "cost_rebate",
+        "method": "sum"
+    },
+    {
+        "fieldName": "impression",
+        "method": "sum"
+    },
+    {
+        "fieldName": "click",
+        "method": "sum"
+    },
+    {
+        "fieldName": "click_rate",
+        "expression": "sum(click1)/sum(impression1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "impression_cost",
+        "expression": "sum(cost1) / sum(impression1) * 1000",
+        "method": "exp"
+    },
+    {
+        "fieldName": "content_click_cost",
+        "expression": "sum(cost1) / sum(click1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "app_activation",
+        "method": "sum"
+    },
+    {
+        "fieldName": "app_activation_rate",
+        "expression": "sum(app_activation1) / sum(click1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "app_activation_cost",
+        "expression": "sum(cost1) / sum(app_activation1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "app_event_pay_amount",
+        "method": "sum"
+    },
+    {
+        "fieldName": "event_pay",
+        "method": "sum"
+    },
+    {
+        "fieldName": "event_pay_cost",
+        "expression": "sum(cost1) / sum(event_pay1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "app_event_next_day_stay_rate",
+        "expression": "sum(app_event_next_day_stay1) / sum(app_activation1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "form_count",
+        "method": "sum"
+    },
+    {
+        "fieldName": "form_count_unit_price",
+        "expression": "sum(cost1) / sum(form_count1)",
+        "method": "exp"
+    }
+]

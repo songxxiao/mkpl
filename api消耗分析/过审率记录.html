@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-<meta name="date" content="2020-10-21" />
+<meta name="date" content="2020-12-02" />
 
 <title>过审率分析</title>
 
@@ -314,7 +314,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">过审率分析</h1>
 <h4 class="author"></h4>
-<h4 class="date">2020-10-21</h4>
+<h4 class="date">2020-12-02</h4>
 
 
 
@@ -464,7 +464,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </tr>
 </tbody>
 </table>
-<p>Vendor status的code含义</p>
+<p>vendor_status字段含义</p>
 <table>
 <thead>
 <tr class="header">
@@ -571,6 +571,36 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </tr>
 </tbody>
 </table>
+<p>ad_creative.sync_status字段含义</p>
+<pre><code>SyncStatusLocalCreated = 1 //等待同步
+        SyncStatusWorking      = 2 //同步中
+        SyncStatusDone         = 3 //同步成功
+        SyncStatusFail         = 4 //同步失败
+        SyncStatusWaitUpdate   = 5 //等待更新
+        SyncStatusEnqueue      = 6 //已入队
+        SyncStatusWaitFetch    = 7 //等待从远端获取详情, 显示同步成功</code></pre>
+<p>ad_unit.status字段含义</p>
+<pre><code>AdUnitStatusUnlimited          = -1 //不限
+        AdUnitStatusCampaignPause      = 1  //计划已暂停
+        AdUnitStatusCampaignOverBudget = 3  //计划超预算
+        AdUnitStatusNoBudget           = 6  //余额不足
+        AdUnitStatusAuditing           = 11 //审核中
+        AdUnitStatusAuditRefused       = 12 //审核未通过
+        AdUnitStatusFinish             = 14 //已结束
+        AdUnitStatusPause              = 15 //已暂停
+        AdUnitStatusOverBudget         = 17 //组超预算
+        AdUnitStatusNoTime             = 19 //未达投放时间
+        AdUnitStatusValid              = 20 //有效
+        AdUnitStatusCreated            = 21 //广告组新建
+        AdUnitStatusDeleted            = 99 //删除
+
+        AdUnitStatusWaitSync    = 10001 //等待同步
+        AdUnitStatusSyncFail    = 10004 //同步失败
+        AdUnitStatusSyncSucceed = 10003 //同步成功</code></pre>
+<p>ad_unit.put_status</p>
+<pre><code>1: 启用
+2: 暂停
+3: 删除</code></pre>
 </div>
 
 

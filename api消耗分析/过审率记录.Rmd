@@ -111,7 +111,7 @@ ad_unit.scene_id，可以用逗号拼接，同时支持多个位置，取
 
 
 
-Vendor status的code含义
+vendor_status字段含义
 
 | Code  | 含义               | 备注 |
 | ----- | ------------------ | ---- |
@@ -135,3 +135,58 @@ Vendor status的code含义
 | 10003 | 同步成功           |      |
 | 10004 | 同步失败           |      |
 
+ad_creative.sync_status字段含义
+
+```
+SyncStatusLocalCreated = 1 //等待同步
+        SyncStatusWorking      = 2 //同步中
+        SyncStatusDone         = 3 //同步成功
+        SyncStatusFail         = 4 //同步失败
+        SyncStatusWaitUpdate   = 5 //等待更新
+        SyncStatusEnqueue      = 6 //已入队
+        SyncStatusWaitFetch    = 7 //等待从远端获取详情, 显示同步成功
+```
+
+
+ad_unit.status字段含义
+
+```
+AdUnitStatusUnlimited          = -1 //不限
+        AdUnitStatusCampaignPause      = 1  //计划已暂停
+        AdUnitStatusCampaignOverBudget = 3  //计划超预算
+        AdUnitStatusNoBudget           = 6  //余额不足
+        AdUnitStatusAuditing           = 11 //审核中
+        AdUnitStatusAuditRefused       = 12 //审核未通过
+        AdUnitStatusFinish             = 14 //已结束
+        AdUnitStatusPause              = 15 //已暂停
+        AdUnitStatusOverBudget         = 17 //组超预算
+        AdUnitStatusNoTime             = 19 //未达投放时间
+        AdUnitStatusValid              = 20 //有效
+        AdUnitStatusCreated            = 21 //广告组新建
+        AdUnitStatusDeleted            = 99 //删除
+
+        AdUnitStatusWaitSync    = 10001 //等待同步
+        AdUnitStatusSyncFail    = 10004 //同步失败
+        AdUnitStatusSyncSucceed = 10003 //同步成功
+```
+
+ad_unit.put_status 
+
+```
+1: 启用
+2: 暂停
+3: 删除
+```
+
+entity_vendor_account.status
+
+'账号记录状态 1：正常  2：待授权  3：废弃',
+
+
+entity_vendor_account.vendor_author_status
+
+VendorTokenUnauthorized     = 1 //未授权
+        VendorTokenAuthorizing      = 2 //授权中
+        VendorTokenAuthorized       = 3 //已授权
+        VendorTokenAuthorizeFailed  = 4 //授权失败
+        VendorTokenAuthorizeExpired = 5 //授权过期

@@ -1,0 +1,264 @@
+【数据库表】
+1、素材交易平台 订单表
+CREATE TABLE `material_market_order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL COMMENT '订单名称',
+  `settlement_method` int(11) NOT NULL COMMENT '结算方式',
+  `price` double(20,2) NOT NULL COMMENT '价格',
+  `vendor` varchar(255) NOT NULL DEFAULT '' COMMENT '投放平台（id枚举）',
+  `consume_proportion` double(20,5) NOT NULL COMMENT '消耗占比',
+  `consume_max` double(20,2) NOT NULL COMMENT '消耗上限',
+  `project_id` varchar(255) NOT NULL DEFAULT '' COMMENT '投放项目',
+  `expire_time` timestamp NULL DEFAULT NULL COMMENT '截止日期',
+  `scheduled_time` timestamp NULL DEFAULT NULL COMMENT '预计投放日期',
+  `creator_expire_time` timestamp NULL DEFAULT NULL COMMENT '创意团队申请延期的时间',
+  `landing_page` varchar(255) NOT NULL COMMENT '落地页',
+  `scale` int(11) NOT NULL COMMENT '视频比例',
+  `script_style` int(11) NOT NULL COMMENT '脚本风格',
+  `script_styles` varchar(255) NOT NULL COMMENT '脚本风格多选',
+  `reference` varchar(2000) NOT NULL COMMENT '参考材料（id枚举）',
+  `delivery_method` int(11) NOT NULL COMMENT '派单方式',
+  `assigned_creator_id` int(11) NOT NULL COMMENT '被指派的创作团队id',
+  `product_introduction` varchar(2000) DEFAULT NULL COMMENT '产品介绍',
+  `brand_description` varchar(2000) DEFAULT NULL COMMENT '品牌描述',
+  `others` varchar(2000) DEFAULT NULL COMMENT '其它',
+  `phone` varchar(100) NOT NULL COMMENT '电话',
+  `qq` varchar(100) NOT NULL COMMENT 'qq',
+  `account_id` int(11) NOT NULL COMMENT '所属需求方id',
+  `owner_creator_id` int(11) NOT NULL COMMENT '实际接单的创作团队id',
+  `wechat` varchar(100) NOT NULL DEFAULT '' COMMENT '微信',
+  `status` int(10) NOT NULL COMMENT '订单状态',
+  `create_order_time` timestamp NULL DEFAULT NULL COMMENT '需求发布时间',
+  `receive_order_time` timestamp NULL DEFAULT NULL COMMENT '接收订单时间',
+  `script_confirm_time` timestamp NULL DEFAULT NULL COMMENT '脚本确认时间',
+  `video_confirm_time` timestamp NULL DEFAULT NULL COMMENT '视频确认时间',
+  `data_monitor_time` timestamp NULL DEFAULT NULL COMMENT '数据监控时间',
+  `order_close_time` timestamp NULL DEFAULT NULL COMMENT '订单关闭时间',
+  `total_consume` double(20,4) NOT NULL COMMENT '累计消耗',
+  `video_num` int(11) DEFAULT NULL COMMENT '视频数量',
+  `delay_status` int(11) NOT NULL COMMENT '延期状态',
+  `adv_status` int(11) NOT NULL COMMENT '投放状态',
+  `video_confirm_num` int(11) NOT NULL COMMENT '视频确认数',
+  `video_adv_num` int(11) NOT NULL COMMENT '视频投放数',
+  `cancel_order_status` int(11) NOT NULL COMMENT '撤单状态',
+  `cancel_order_reason` int(11) NOT NULL COMMENT '撤单理由',
+  `cancel_order_remark` varchar(2000) NOT NULL COMMENT '撤单详细说明',
+  `cancel_order_money` double(20,4) NOT NULL COMMENT '撤单赔付金额',
+  `create_time` timestamp NULL DEFAULT NULL,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
+
+（1）status 枚举
+const (
+	MaterialOrderStatusInit            = 1 // 待接单
+	MaterialOrderStatusReject          = 2 // 创作团队拒单
+	MaterialOrderStatusScript          = 3 // 脚本制作中
+	MaterialOrderStatusVideo           = 4 // 视频制作中
+	MaterialOrderStatusVideoAllConfirm = 5 // 视频全部确认
+	MaterialOrderStatusCancel          = 8 // 订单撤销
+	MaterialOrderStatusClose           = 9 // 订单确认（订单关闭）
+)
+
+（2）delay_status 枚举
+const (
+	MaterialOrderDelayNormal  = 0 // 无延期状态
+	MaterialOrderDelayAccount = 1 // 已延期（需求方同意了创作团队的申请或主动延期）
+	MaterialOrderDelayCreator = 2 // 创作团队申请延期
+)
+
+（3）adv_status 枚举
+const (
+	MaterialAdvStatusNo   = 0 // 未投放
+	MaterialAdvStatusOK   = 1 // 已投放
+	MaterialAdvStatusPart = 2 // 部分投放
+)
+
+（4）settlement_method 枚举
+const (
+	MaterialSettlementFixedPrice   = 1 // 一口价
+	MaterialSettlementConsumePrice = 2 // 底价+按消耗
+)
+
+（5）delivery_method 枚举
+const (
+	MaterialDeliveryGrab     = 1 // 自由抢单
+	MaterialDeliveryAssigned = 2 // 指定创作团队
+)
+
+
+2、用户表（material_market_order表中的account_id关联到这个表）
+CREATE TABLE `account_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `password` varchar(255) NOT NULL COMMENT '密码',
+  `name` varchar(255) DEFAULT NULL COMMENT '名字',
+  `mail` varchar(100) NOT NULL DEFAULT '',
+  `company_id` int(11) DEFAULT NULL,
+  `creator_id` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT '0',
+  `role` int(11) DEFAULT NULL,
+  `title` int(11) DEFAULT NULL,
+  `role_set_id` int(11) DEFAULT NULL,
+  `phone` varchar(100) NOT NULL,
+  `comment` text NOT NULL,
+  `supervisor_id` int(11) NOT NULL,
+  `login_count` int(11) NOT NULL,
+  `wx_open_id` varchar(255) NOT NULL COMMENT '微信公众号openid',
+  `create_time` timestamp NULL DEFAULT NULL,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `last_login_time` timestamp NULL DEFAULT NULL,
+  `sign_agreement` int(11) DEFAULT '2',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `mail_company_uqx` (`mail`,`company_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='后台管理员用户表';
+
+
+3、代理商表、创作团队表（管理员）根据company_type区分
+CREATE TABLE `account_admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `password` varchar(255) NOT NULL COMMENT '密码',
+  `name` varchar(255) NOT NULL COMMENT '名字',
+  `mail` varchar(100) NOT NULL DEFAULT '',
+  `company_name` varchar(255) NOT NULL DEFAULT '' COMMENT '公司名',
+  `manager` varchar(255) NOT NULL DEFAULT '',
+  `status` int(11) NOT NULL DEFAULT '0',
+  `phone` varchar(100) NOT NULL,
+  `qq` varchar(255) NOT NULL,
+  `we_chat` varchar(255) NOT NULL DEFAULT '',
+  `comment` text NOT NULL,
+  `sys_admin` int(2) NOT NULL DEFAULT '0' COMMENT '1：超级管理员',
+  `balance` double(20,4) NOT NULL DEFAULT '0.0000' COMMENT '账户余额',
+  `usable_balance` double(20,4) NOT NULL DEFAULT '0.0000' COMMENT '账户可用余额',
+  `all_cost` double(20,4) NOT NULL DEFAULT '0.0000' COMMENT '素材交易平台账户总消耗',
+  `wx_open_id` varchar(255) NOT NULL COMMENT '微信公众号openid',
+  `head` varchar(255) NOT NULL COMMENT '头像',
+  `province` varchar(255) NOT NULL COMMENT '省',
+  `city` varchar(255) NOT NULL COMMENT '城市',
+  `speciality` varchar(2000) NOT NULL COMMENT '特长',
+  `work_url` varchar(5000) NOT NULL COMMENT '作品',
+  `license_url` varchar(255) NOT NULL COMMENT '营业执照',
+  `identity_card_url` varchar(255) NOT NULL COMMENT '身份证',
+  `able_withdraw_balance` double(20,4) NOT NULL COMMENT '可提现金额',
+  `income` double(20,4) NOT NULL COMMENT '收入',
+  `company_type` int(11) NOT NULL COMMENT '公司类型',
+  `create_time` timestamp NULL DEFAULT NULL,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `sign_agreement` int(11) NOT NULL DEFAULT '2' COMMENT '是否签订了用户协议',
+  PRIMARY KEY (`id`),
+  KEY `mail_uqx` (`mail`,`company_name`(191))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='后台管理员用户表';
+
+根据company_type来区分公司角色
+// company_type 字段枚举
+const (
+	CompanyTypeZhitou  = 0 // 智投（需求方）
+	CompanyTypeCreator = 1 // 创作团队
+)
+
+
+4、账户流水表
+CREATE TABLE `account_statement` (
+  `autokid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `record_id` varchar(64) NOT NULL DEFAULT '' COMMENT '流水单号',
+  `company_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '账户id',
+  `order_id` varchar(64) NOT NULL DEFAULT '' COMMENT '对应的订单ID',
+  `company_type` int(1) unsigned NOT NULL DEFAULT '1' COMMENT '账户类型：1、需求方账户 2、创作方账户',
+  `type` varchar(32) NOT NULL DEFAULT '' COMMENT '流水类型',
+  `reach_ceiling` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '0、未达上限 1、已达上限',
+  `money` double(20,4) NOT NULL DEFAULT '0.0000' COMMENT '金额',
+  `origin_consume` double(20,4) NOT NULL COMMENT '原始消耗',
+  `date` varchar(64) NOT NULL DEFAULT '' COMMENT '日期',
+  `video_id` int(11) NOT NULL COMMENT '视频id',
+  `remarks` varchar(255) NOT NULL DEFAULT '' COMMENT '备注信息',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
+  PRIMARY KEY (`autokid`),
+  UNIQUE KEY `idx_reccordid` (`record_id`) USING BTREE,
+  KEY `idx_accountid` (`company_id`),
+  KEY `idx_ctime` (`create_time`),
+  KEY `idx_orderid` (`order_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账户流水表';
+
+（1） type字段枚举
+	StatementTypeFreeze        = 1 //冻结
+	StatementTypeUnfreeze      = 2 //解冻
+	StatementTypeDeduct        = 3 //直接扣除
+	StatementTypeWithdraw      = 4 //提现
+	StatementTypeIncome        = 5 //直接收益
+	StatementTypeTopUp         = 6 //充值
+	StatementTypeConsumeIncome = 7 //订单消耗收益
+	StatementTypeConsumeDeduct = 8 //订单消耗扣除
+
+
+（2） companyType （这里的枚举值和account_admin中的不一样）
+	CompanyTypeDemander = 1 //需求方账户
+	CompanyTypeCreator  = 2 //创作团队方账户
+
+
+5、视频表
+CREATE TABLE `material_market_video` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL COMMENT '对应的订单id',
+  `name` varchar(255) NOT NULL COMMENT '文件名',
+  `url` varchar(255) NOT NULL COMMENT '文件url',
+  `water_url` varchar(255) NOT NULL COMMENT '水印url',
+  `status` int(11) NOT NULL COMMENT '状态',
+  `suggestion` varchar(2000) DEFAULT NULL COMMENT '修改意见',
+  `adv_status` int(11) NOT NULL COMMENT '投放状态',
+  `upload_time` timestamp NULL DEFAULT NULL COMMENT '上传时间',
+  `project_id` varchar(1000) NOT NULL COMMENT '绑定项目',
+  `create_time` timestamp NULL DEFAULT NULL,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_order_id` (`order_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='素材内容视频表';
+
+
+ps： 原素材交易平台 创作团队表 -> 整合到了智投的admin表中
+
+    根据订单关联代理商和创作团队的关系
+    代理商-订单：
+        material_market_order.account_id <-> account_user.id
+        account_user.company_id <-> account_admin.id
+    创作团队-订单：
+        material_market_order.creator_id <-> account_admin.id
+
+【一】代理商页面
+（一）创作团队结算数据
+    （1）消耗金额
+        sum(account_statement.origin_consume)
+        where account_statement.type = 8
+
+    （2）涉及结算订单
+        有流水的订单
+        cnt(distinct account_statement.order_id)
+        where account_statement.money > 0
+        where account_statement.type in (3,8)
+
+    （3）一口价订单
+        步骤2 + material_market_order.settlement_method = 1
+
+    （4）底价加消耗订单
+        步骤2 + material_market_order.settlement_method = 2
+
+    （5）结算金额
+        sum(account_statement.money)
+        where account_statement.type in (3,8)
+
+（二）单个创作团队下的结算订单数据
+    关联 material_market_order.creator_id <-> account_admin.id
+
+    结算金额和消耗金额
+        + where order_id = {目标} 
+
+（三）视频消耗 
+    关联 material_market_video.order_id <-> material_market_order.id
+
+    结算金额和消耗金额
+        + where video_id = {目标} 
+
+
+【二】创作团队页面
+    基本和代理商类似，
+    代理商account_statement.type用8的，创作团队用7
+    代理商account_statement.type用3的，创作团队用5

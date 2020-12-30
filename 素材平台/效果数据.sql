@@ -39,8 +39,7 @@ select
       , valid_play / total_play  as valid_play_rate      -- 有效播放率
       , valid_play / cost as valid_play_cost                --  有效播放成本
       , play_duration_sum / total_play as  avg_play_duration               -- 平均播放时长(单位ms) 
-from (
-(select video.id as video_id
+from (select video.id as video_id
        , video.url as url
        , video.cover_image_url as cover_image_url
 from ( select id from makepolo_common.account_user
@@ -49,8 +48,9 @@ left join
 (  select account_id, id as order_id 
  from makepolo.material_market_order  where owner_creator_id = ${company_id} ${strutil.contain(order_id!'-1', '-1') ? "":"and id in ( "+ order_id +" )"}  ) mkt_order on mkt_order.account_id = user.id
 left join
-(  select id, order_id from makepolo.material_market_video  ) video on video.order_id = mkt_order.order_id
-where video.id is not null ) video_info left join 
+(  select id,url,cover_image_url, order_id from makepolo.material_market_video  ) video on video.order_id = mkt_order.order_id
+where video.id is not null) video_info 
+       left join 
 (select material_video_id,
        vendor_id,
        sum(play_3s_count)        as play_3s_count,
@@ -81,7 +81,7 @@ where is_test_data = 0
 group by material_video_id, vendor_id
 order by material_video_id
 ) creative on creative.material_video_id = video_info.video_id
-) all_dt
+
 
 
 
