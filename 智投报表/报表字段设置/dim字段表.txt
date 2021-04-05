@@ -115,7 +115,7 @@ increase_ad,increase_creative,cnt_ad,cnt_creative,cost,cost_rebate,impression,cl
 
 
 
----------------------------------------------------------------------------------------
+
 
 
 
@@ -161,6 +161,6 @@ app_event_next_day_stay_rate
 form_count
 form_count_unit_price
 
---------------------------------------------------
+
 
 increase_ad,increase_creative,cnt_ad,cnt_creative,cost,cost_rebate,impression,click,click_rate,content_impression,content_click,content_click_rate,click_cost,content_click_cost,play_3s_rate, play_5s_rate,app_download_start,app_download_complete,app_register,app_register_cost,app_register_rate,app_event_pay_amount,event_pay_first_day,event_pay_purchase_amount_first_day,first_day_roi,form_count_click_rate,deep_convert_count,deep_convert_cost,deep_convert_rate,impression_cost,content_click_cost,app_activation,app_activation_rate,app_activation_cost,app_event_pay_amount,event_pay,event_pay_cost,app_event_next_day_stay_rate,form_count,form_count_unit_price

@@ -1,0 +1,166 @@
+date
+hour
+project_id
+params_account_id
+vendor_id
+params_vendor_account_id
+cost
+cost_rebate
+impression
+click
+click_rate
+content_impression
+content_click
+content_click_rate
+impression_cost
+click_cost
+content_click_cost
+play_3s_rate
+play_5s_rate
+play_end_rate
+convert_count
+convert_rate
+convert_cost
+deep_convert_count
+deep_convert_rate
+deep_convert_cost
+app_download_start
+app_download_complete
+app_activation
+app_activation_cost
+app_activation_rate
+app_register
+app_register_cost
+app_register_rate
+app_event_pay_amount
+app_event_next_day_stay_rate
+event_pay_first_day
+event_pay_purchase_amount_first_day
+first_day_roi
+event_pay
+event_pay_cost
+form_count
+form_count_click_rate
+form_count_unit_price
+total_play
+valid_play
+valid_play_rate
+valid_play_cost
+play_25_rate
+play_50_rate
+play_75_rate
+play_100_feed_rate
+play_100_feed_break_rate
+play_duration_per_play
+wifi_play_rate
+event_new_user_pay
+event_new_user_pay_cost
+event_new_user_pay_ratio
+event_jin_jian_app
+event_jin_jian_app_cost
+event_new_user_jinjian_app
+event_new_user_jinjian_app_cost
+event_new_user_jinjian_app_roi
+event_credit_grant_app
+event_credit_grant_app_cost
+event_credit_grant_app_ratio
+event_new_user_credit_grant_app
+event_new_user_credit_grant_app_cost
+event_new_user_credit_grant_app_roi
+event_order_paid
+event_order_paid_roi
+event_order_paid_cost
+event_valid_clues
+event_valid_clues_cost
+merchant_reco_fans
+merchant_reco_fans_cost
+event_goods_view
+event_goods_view_cost
+event_jin_jian_landing_page
+event_jin_jian_landing_page_cost
+event_new_user_jinjian_page
+event_new_user_jinjian_page_cost
+event_new_user_jinjian_page_roi
+event_credit_grant_landing_page
+event_credit_grant_landing_page_cost
+event_credit_grant_landing_page_ratio
+event_new_user_credit_grant_page
+event_new_user_credit_grant_page_cost
+event_new_user_credit_grant_page_roi
+event_button_click
+event_button_click_rate
+event_button_click_cost
+event_get_through
+event_get_through_cost
+event_get_through_ratio
+share_count
+comment_count
+like_count
+add_follower_count
+complain_count
+hate_count
+negative_count
+cancel_follow
+ad_product_cnt
+event_add_wechat
+event_add_wechat_cost
+event_add_wechat_ratio
+app_event_next_day_stay
+app_event_next_day_stay_cost
+
+
+
+           ${array.contain(dimArray,"event_new_user_pay")? ",ifnull(sum(event_new_user_pay),0) as event_new_user_pay" :""}  
+           ${array.contain(dimArray,"event_new_user_pay_cost")? ",ifnull(sum(cost/10000) / sum(event_new_user_pay),0) as event_new_user_pay_cost" :""}  
+           ${array.contain(dimArray,"event_new_user_pay_ratio")? ",ifnull(sum(event_new_user_pay) / sum(content_click),0) as event_new_user_pay_ratio" :""}  
+           ${array.contain(dimArray,"event_jin_jian_app")? ",ifnull(sum(event_jin_jian_app),0) as event_jin_jian_app" :""}  
+           ${array.contain(dimArray,"event_jin_jian_app_cost")? ",ifnull(sum(cost/10000) / sum(event_jin_jian_app),0) as event_jin_jian_app_cost" :""}  
+           ${array.contain(dimArray,"event_new_user_jinjian_app")? ",ifnull(sum(event_new_user_jinjian_app),0) as event_new_user_jinjian_app" :""}  
+           ${array.contain(dimArray,"event_new_user_jinjian_app_cost")? ",ifnull(sum(cost/10000) / sum(event_new_user_jinjian_app),0) as event_new_user_jinjian_app_cost" :""}  
+           ${array.contain(dimArray,"event_new_user_jinjian_app_roi")? ",ifnull(sum(event_new_user_jinjian_app) / (sum(convert_count) + sum(form_count)),0) as event_new_user_jinjian_app_roi" :""}  
+           ${array.contain(dimArray,"event_credit_grant_app")? ",ifnull(sum(event_credit_grant_app),0) as event_credit_grant_app" :""}  
+           ${array.contain(dimArray,"event_credit_grant_app_cost")? ",ifnull(sum(cost/10000) / sum(event_credit_grant_app),0) as event_credit_grant_app_cost" :""}  
+           ${array.contain(dimArray,"event_credit_grant_app_ratio")? ",ifnull(sum(event_credit_grant_app)/sum(event_jin_jian_app),0) as event_credit_grant_app_ratio" :""}  
+           ${array.contain(dimArray,"event_new_user_credit_grant_app")? ",ifnull(sum(event_new_user_credit_grant_app),0) as event_new_user_credit_grant_app" :""}  
+           ${array.contain(dimArray,"event_new_user_credit_grant_app_cost")? ",ifnull(sum(cost/10000) / sum(event_new_user_credit_grant_app),0) as event_new_user_credit_grant_app_cost" :""}  
+           ${array.contain(dimArray,"event_new_user_credit_grant_app_roi")? ",ifnull(sum(event_new_user_credit_grant_app) / (sum(convert_count) + sum(form_count)),0) as event_new_user_credit_grant_app_roi" :""}  
+           ${array.contain(dimArray,"event_order_paid")? ",ifnull(sum(event_order_paid),0) as event_order_paid" :""}  
+           ${array.contain(dimArray,"event_order_paid_roi")? ",ifnull(sum(event_order_paid) / sum(event_goods_view),0) as event_order_paid_roi" :""}  
+           ${array.contain(dimArray,"event_order_paid_cost")? ",ifnull(sum(cost/10000) / sum(event_order_paid),0) as event_order_paid_cost" :""}  
+           ${array.contain(dimArray,"event_valid_clues")? ",ifnull(sum(event_valid_clues),0) as event_valid_clues" :""}   
+           ${array.contain(dimArray,"event_valid_clues_cost")? ",ifnull(sum(cost/10000) / sum(event_valid_clues),0) as event_valid_clues_cost" :""}  
+           ${array.contain(dimArray,"merchant_reco_fans")? ",ifnull(sum(merchant_reco_fans),0) as merchant_reco_fans" :""}   
+           ${array.contain(dimArray,"merchant_reco_fans_cost")? ",ifnull(sum(cost/10000) / sum(merchant_reco_fans),0) as merchant_reco_fans_cost" :""}  
+           ${array.contain(dimArray,"event_goods_view")? ",ifnull(sum(event_goods_view),0) as event_goods_view" :""}  
+           ${array.contain(dimArray,"event_goods_view_cost")? ",ifnull(sum(cost/10000) / sum(event_goods_view),0) as event_goods_view_cost" :""}  
+           ${array.contain(dimArray,"event_jin_jian_landing_page")? ",ifnull(sum(event_jin_jian_landing_page),0) as event_jin_jian_landing_page" :""}  
+           ${array.contain(dimArray,"event_jin_jian_landing_page_cost")? ",ifnull(sum(cost/10000) / sum(event_jin_jian_landing_page),0) as event_jin_jian_landing_page_cost" :""}  
+           ${array.contain(dimArray,"event_new_user_jinjian_page")? ",ifnull(sum(event_new_user_jinjian_page),0) as event_new_user_jinjian_page" :""}  
+           ${array.contain(dimArray,"event_new_user_jinjian_page_cost")? ",ifnull(sum(cost/10000) / sum(event_new_user_jinjian_page),0) as event_new_user_jinjian_page_cost" :""}  
+           ${array.contain(dimArray,"event_new_user_jinjian_page_roi")? ",ifnull(sum(event_new_user_jinjian_page) / (sum(convert_count) + sum(form_count)),0) as event_new_user_jinjian_page_roi" :""}  
+           ${array.contain(dimArray,"event_credit_grant_landing_page")? ",ifnull(sum(event_credit_grant_landing_page),0) as event_credit_grant_landing_page" :""}  
+           ${array.contain(dimArray,"event_credit_grant_landing_page_cost")? ",ifnull(sum(cost/10000) / sum(event_credit_grant_landing_page),0) as event_credit_grant_landing_page_cost" :""}  
+           ${array.contain(dimArray,"event_credit_grant_landing_page_ratio")? ",ifnull(sum(event_credit_grant_landing_page) / sum(event_jin_jian_landing_page),0) as event_credit_grant_landing_page_ratio" :""}  
+           ${array.contain(dimArray,"event_new_user_credit_grant_page")? ",ifnull(sum(event_new_user_credit_grant_page),0) as event_new_user_credit_grant_page" :""}  
+           ${array.contain(dimArray,"event_new_user_credit_grant_page_cost")? ",ifnull(sum(cost/10000) / sum(event_new_user_credit_grant_page),0) as event_new_user_credit_grant_page_cost" :""}  
+           ${array.contain(dimArray,"event_new_user_credit_grant_page_roi")? ",ifnull(sum(event_new_user_credit_grant_page) / (sum(convert_count) + sum(form_count)),0) as event_new_user_credit_grant_page_roi" :""}  
+           ${array.contain(dimArray,"event_button_click")? ",ifnull(sum(event_button_click),0) as event_button_click" :""}  
+           ${array.contain(dimArray,"event_button_click_rate")? ",ifnull(sum(event_button_click) / sum(content_click),0) as event_button_click_rate" :""}  
+           ${array.contain(dimArray,"event_button_click_cost")? ",ifnull(sum(cost/10000) / sum(event_button_click),0) as event_button_click_cost" :""}  
+           ${array.contain(dimArray,"event_get_through")? ",ifnull(sum(event_get_through),0) as event_get_through" :""}  
+           ${array.contain(dimArray,"event_get_through_cost")? ",ifnull(sum(cost/10000) / sum(event_get_through),0) as event_get_through_cost" :""}  
+           ${array.contain(dimArray,"event_get_through_ratio")? ",ifnull(sum(event_get_through) / sum(content_click),0) as event_get_through_ratio" :""}  
+           ${array.contain(dimArray,"share_count")? ",ifnull(sum(share_count),0) as share_count" :""}  
+           ${array.contain(dimArray,"comment_count")? ",ifnull(sum(comment_count),0) as comment_count" :""}  
+           ${array.contain(dimArray,"like_count")? ",ifnull(sum(like_count),0) as like_count" :""}  
+           ${array.contain(dimArray,"add_follower_count")? ",ifnull(sum(add_follower_count),0) as add_follower_count" :""}  
+           ${array.contain(dimArray,"complain_count")? ",ifnull(sum(complain_count),0) as complain_count" :""}   
+           ${array.contain(dimArray,"hate_count")? ",ifnull(sum(hate_count),0) as hate_count" :""}   
+           ${array.contain(dimArray,"negative_count")? ",ifnull(sum(negative_count),0) as negative_count" :""}  
+           ${array.contain(dimArray,"cancel_follow")? ",ifnull(sum(cancel_follow),0) as cancel_follow" :""}  
+           ${array.contain(dimArray,"ad_product_cnt")? ",ifnull(sum(ad_product_cnt),0) as ad_product_cnt" :""}   
+           ${array.contain(dimArray,"event_add_wechat")? ",ifnull(sum(event_add_wechat),0) as event_add_wechat" :""}
+           ${array.contain(dimArray,"event_add_wechat_cost")? ",ifnull(sum(cost/10000) /sum(ad_product_cnt),0) as event_add_wechat_cost" :""}
+           ${array.contain(dimArray,"event_add_wechat_ratio")? ",ifnull(sum(event_add_wechat) / sum(content_click),0) as event_add_wechat_ratio" :""}
+           ${array.contain(dimArray,"app_event_next_day_stay")? ",ifnull(sum(app_event_next_day_stay),0) as app_event_next_day_stay" :""}
+           ${array.contain(dimArray,"app_event_next_day_stay_cost")? ",ifnull(sum(cost/10000) / sum(app_event_next_day_stay),0) as app_event_next_day_stay_cost" :""}

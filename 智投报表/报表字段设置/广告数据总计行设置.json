@@ -1,0 +1,491 @@
+[
+    {
+        "fieldName": "cost",
+        "method": "sum"
+    },
+    {
+        "fieldName": "cost_rebate",
+        "method": "sum"
+    },
+    {
+        "fieldName": "impression",
+        "method": "sum"
+    },
+    {
+        "fieldName": "click",
+        "method": "sum"
+    },
+    {
+        "fieldName": "click_rate",
+        "expression": "sum(click1)/sum(impression1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "content_impression",
+        "method": "sum"
+    },
+    {
+        "fieldName": "content_click",
+        "method": "sum"
+    },
+    {
+        "fieldName": "content_click_rate",
+        "expression": "sum(content_click1)/sum(content_impression1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "impression_cost",
+        "expression": "(sum(cost1)/sum(impression))*1000",
+        "method": "exp"
+    },
+    {
+        "fieldName": "click_cost",
+        "expression": "sum(cost1)/sum(click1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "content_click_cost",
+        "expression": "sum(cost)/sum(content_click)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_3s_rate",
+        "expression": "sum(play_3s_count1)/sum(content_impression1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_5s_rate",
+        "expression": "sum(play_5s_count1)/sum(content_impression1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_end_rate",
+        "expression": "sum(play_end_count1)/sum(content_impression1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "convert_count",
+        "method": "sum"
+    },
+    {
+        "fieldName": "convert_rate",
+        "expression": "sum(convert_count1)/sum(click1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "convert_cost",
+        "expression": "sum(cost1)/sum(convert_count1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "deep_convert_count",
+        "expression": "sum(valid_play)/sum(total_play)",
+        "method": "sum"
+    },
+    {
+        "fieldName": "deep_convert_rate",
+        "expression": "sum(deep_convert_count1)/sum(click1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "deep_convert_cost",
+        "expression": "sum(cost1)/sum(deep_convert_count1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "app_download_start",
+        "method": "sum"
+    },
+    {
+        "fieldName": "app_download_complete",
+        "method": "sum"
+    },
+    {
+        "fieldName": "app_activation",
+        "method": "sum"
+    },
+    {
+        "fieldName": "app_activation_cost",
+        "expression": "sum(cost1)/sum(app_activation1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "app_activation_rate",
+        "expression": "sum(app_activation1)/sum(click1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "app_register",
+        "method": "sum"
+    },
+    {
+        "fieldName": "app_register_cost",
+        "expression": "sum(cost1)/sum(app_register1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "app_register_rate",
+        "expression": "sum(app_register1)/sum(app_activation1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "app_event_pay_amount",
+        "method": "sum"
+    },
+    {
+        "fieldName": "app_event_next_day_stay_rate",
+        "expression": "sum(app_event_next_day_stay1)/sum(next_day_active_count1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_pay_first_day",
+        "method": "sum"
+    },
+    {
+        "fieldName": "event_pay_purchase_amount_first_day",
+        "method": "sum"
+    },
+    {
+        "fieldName": "first_day_roi",
+        "expression": "sum(cost1)/sum(event_pay_purchase_amount_first_day1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_pay",
+        "method": "sum"
+    },
+    {
+        "fieldName": "event_pay_cost",
+        "expression": "sum(cost1)/sum(event_pay1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "form_count",
+        "method": "sum"
+    },
+    {
+        "fieldName": "form_count_click_rate",
+        "expression": "sum(form_count1)/sum(content_click1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "form_count_unit_price",
+        "expression": "sum(cost1)/sum(form_count1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "total_play",
+        "method": "sum"
+    },
+    {
+        "fieldName": "valid_play",
+        "method": "sum"
+    },
+    {
+        "fieldName": "valid_play_rate",
+        "expression": "sum(valid_play1)/sum(total_play1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "valid_play_cost",
+        "expression": "sum(cost1)/sum(valid_play1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_25_rate",
+        "expression": "sum(play_25_feed_break1)/sum(total_play1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_50_rate",
+        "expression": "sum(play_50_feed_break1)/sum(total_play1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_75_rate",
+        "expression": "sum(play_75_feed_break1)/sum(total_play1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_100_feed_break_rate",
+        "expression": "sum(play_100_feed_break1)/sum(total_play1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "play_duration_per_play",
+        "expression": "sum(play_duration_sum1)/sum(total_play1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "wifi_play_rate",
+        "expression": "sum(wifi_play1)/sum(total_play1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_new_user_pay",
+        "method": "sum"
+    },
+    {
+        "fieldName": "event_new_user_pay_cost",
+        "expression": "sum(cost1)/sum(event_new_user_pay1)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_new_user_pay_ratio",
+        "expression": "sum(event_new_user_pay)/sum(content_click)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_jin_jian_app",
+        "method": "sum"
+    },
+    {
+        "fieldName": "event_jin_jian_app_cost",
+        "expression": "sum(cost1)/sum(event_jin_jian_app)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_new_user_jinjian_app",
+        "method": "sum"
+    },
+    {
+        "fieldName": "event_new_user_jinjian_app_cost",
+        "expression": "sum(cost1)/sum(event_new_user_jinjian_app)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_new_user_jinjian_app_roi",
+        "expression": "sum(event_new_user_jinjian_app)/(sum(convert_count) + sum(form_count))",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_credit_grant_app",
+        "method": "sum"
+    },
+    {
+        "fieldName": "event_credit_grant_app_cost",
+        "expression": "sum(cost1)/sum(event_credit_grant_app)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_credit_grant_app_ratio",
+        "expression": "sum(event_credit_grant_app)/sum(event_jin_jian_app)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_new_user_credit_grant_app",
+        "method": "sum"
+    },
+    {
+        "fieldName": "event_new_user_credit_grant_app_cost",
+        "expression": "sum(cost1)/sum(event_new_user_credit_grant_app)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_new_user_credit_grant_app_roi",
+        "expression": "sum(event_new_user_credit_grant_app)/(sum(convert_count) + sum(form_count))",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_order_paid",
+        "method": "sum"
+    },
+    {
+        "fieldName": "event_order_paid_roi",
+        "expression": "sum(event_order_paid)/sum(event_goods_view)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_order_paid_cost",
+        "expression": "sum(cost1)/sum(event_order_paid)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_valid_clues",
+        "method": "sum"
+    },
+    {
+        "fieldName": "event_valid_clues_cost",
+        "expression": "sum(cost1)/sum(event_valid_clues)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_valid_clues_cost",
+        "expression": "sum(cost1)/sum(event_valid_clues)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "merchant_reco_fans",
+        "method": "sum"
+    },
+    {
+        "fieldName": "merchant_reco_fans_cost",
+        "expression": "sum(cost1)/sum(merchant_reco_fans)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_goods_view",
+        "method": "sum"
+    },
+    {
+        "fieldName": "event_goods_view_cost",
+        "expression": "sum(cost1)/sum(event_goods_view)",
+        "method": "exp"
+    }, 
+    {
+        "fieldName": "event_jin_jian_landing_page",
+        "method": "sum"
+    }, 
+    {
+        "fieldName": "event_jin_jian_landing_page_cost",
+        "expression": "sum(cost1)/sum(event_goods_view)",
+        "method": "exp"
+    }, 
+    {
+        "fieldName": "event_new_user_jinjian_page",
+        "method": "sum"
+    }, 
+    {
+        "fieldName": "event_new_user_jinjian_page_cost",
+        "expression": "sum(cost1)/sum(event_new_user_jinjian_page)",
+        "method": "exp"
+    }, 
+    {
+        "fieldName": "event_new_user_jinjian_page_roi",
+        "expression": "sum(event_new_user_jinjian_page)/(sum(convert_count) + sum(form_count)",
+        "method": "exp"
+    }, 
+    {
+        "fieldName": "event_credit_grant_landing_page",
+        "method": "sum"
+    }, 
+    {
+        "fieldName": "event_new_user_jinjian_page_roi",
+        "expression": "sum(event_new_user_jinjian_page)/(sum(convert_count) + sum(form_count)",
+        "method": "exp"
+    }, 
+    {
+        "fieldName": "event_credit_grant_landing_page",
+        "method": "sum"
+    }, 
+    {
+        "fieldName": "event_new_user_jinjian_page_roi",
+        "expression": "sum(event_new_user_jinjian_page)/(sum(convert_count) + sum(form_count)",
+        "method": "exp"
+    }, 
+    {
+        "fieldName": "event_credit_grant_landing_page",
+        "method": "sum"
+    }, 
+    {
+        "fieldName": "event_credit_grant_landing_page_cost",
+        "expression": "sum(cost1)/sum(event_credit_grant_landing_page)",
+        "method": "exp"
+    }, 
+    {
+        "fieldName": "event_credit_grant_landing_page_ratio",
+        "expression": "sum(event_credit_grant_landing_page)/sum(event_jin_jian_landing_page)",
+        "method": "exp"
+    }, 
+    {
+        "fieldName": "event_new_user_credit_grant_page",
+        "method": "sum"
+    }, 
+    {
+        "fieldName": "event_new_user_credit_grant_page_cost",
+        "expression": "sum(cost1)/sum(event_jin_jian_landing_page)",
+        "method": "exp"
+    }, 
+    {
+        "fieldName": "event_new_user_credit_grant_page_roi",
+        "expression": "sum(event_new_user_credit_grant_page)/ (sum(convert_count) + sum(form_count))",
+        "method": "exp"
+    }, 
+    {
+        "fieldName": "event_button_click",
+        "method": "sum"
+    }, 
+    {
+        "fieldName": "event_button_click_rate",
+        "expression": "sum(event_button_click)/ sum(content_click)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_button_click_cost",
+        "expression": "sum(cost1)/ sum(event_button_click)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_get_through",
+        "method": "sum"
+    }, 
+    {
+        "fieldName": "event_get_through_cost",
+        "expression": "sum(cost1)/ sum(event_get_through)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_get_through_ratio",
+        "expression": "sum(event_get_through)/ sum(content_click)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "share_count",
+        "method": "sum"
+    }, 
+    {
+        "fieldName": "comment_count",
+        "method": "sum"
+    }, 
+    {
+        "fieldName": "like_count",
+        "method": "sum"
+    }, 
+    {
+        "fieldName": "add_follower_count",
+        "method": "sum"
+    }, 
+    {
+        "fieldName": "complain_count",
+        "method": "sum"
+    }, 
+    {
+        "fieldName": "hate_count",
+        "method": "sum"
+    }, 
+    {
+        "fieldName": "negative_count",
+        "method": "sum"
+    }, 
+    {
+        "fieldName": "cancel_follow",
+        "method": "sum"
+    }, 
+    {
+        "fieldName": "ad_product_cnt",
+        "method": "sum"
+    },
+    {
+        "fieldName": "event_add_wechat",
+        "method": "sum"
+    },
+    {
+        "fieldName": "event_add_wechat_cost",
+        "expression": "sum(cost1)/ sum(event_add_wechat)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "event_add_wechat_ratio",
+        "expression": "sum(event_add_wechat)/ sum(content_click)",
+        "method": "exp"
+    },
+    {
+        "fieldName": "app_event_next_day_stay",
+        "method": "sum"
+    },
+    {
+        "fieldName": "app_event_next_day_stay_cost",
+        "expression": "sum(cost1)/ sum(app_event_next_day_stay)",
+        "method": "exp"
+    }
+]
