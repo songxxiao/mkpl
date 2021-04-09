@@ -1,0 +1,47 @@
+         select date 
+  		    eva.company_id  
+                cr.vendor_id as vendor_id 
+                video_account_id 
+                project_id 
+                creative_account_id 
+  		    if((video_url='' or video_url is null)  '未知'  video_url) as video_url 
+ 		    if((video_name='' or video_name is null)  '未知'  video_name) as video_name 
+                material_market_creator_id 
+                sum(cost)                                cost 
+                sum(cost/ (1+ (return_point / 100)))                         cost_rebate 
+                sum(impression)                          impression 
+                sum(click)                               click 
+                sum(content_impression)                  content_impression 
+                sum(content_click)                       content_click 
+                sum(app_download_start)                  app_download_start 
+                sum(app_download_complete)               app_download_complete 
+                sum(app_activation)                      app_activation 
+                sum(next_day_active_count)                      next_day_active_count 
+                sum(app_register)                        app_register 
+                sum(app_event_pay)                       app_event_pay 
+                sum(app_event_pay_amount)                app_event_pay_amount 
+                sum(app_event_next_day_stay)             app_event_next_day_stay 
+                sum(event_pay_first_day)                 event_pay_first_day 
+                sum(event_pay_purchase_amount_first_day) event_pay_purchase_amount_first_day 
+                sum(event_pay)                           event_pay 
+                sum(form_count)                          form_count 
+                sum(play_3s_count)                       play_3s_count 
+  		    sum(play_5s_count)                       play_5s_count 
+                sum(play_end_count)                      play_end_count 
+		    sum(play_25_feed_break)  as play_25_feed_break  
+   		    sum(play_50_feed_break) as play_50_feed_break 
+  		    sum(play_75_feed_break) as play_75_feed_break 
+  		    sum(play_100_feed_break) as play_100_feed_break  
+  		    sum(total_play) as total_play 
+  		    sum(valid_play) as valid_play 
+                sum(share_count)                         share_count 
+                sum(comment_count)                       comment_count 
+                sum(like_count)                          like_count 
+                sum(hate_count)                          hate_count 
+                sum(add_follower_count)                  add_follower_count 
+                sum(complain_count)                      complain_count 
+                sum(negative_count)                      negative_count 
+  		    sum(convert_count)                      convert_count 
+  		    sum(deep_convert_count)                      deep_convert_count 
+  		    sum(play_duration_sum)     		play_duration_sum 
+  		    sum(wifi_play) as wifi_play

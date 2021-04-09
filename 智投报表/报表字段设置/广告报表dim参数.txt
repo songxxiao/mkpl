@@ -1,166 +1,168 @@
-date
-hour
-project_id
-params_account_id
-vendor_id
-params_vendor_account_id
-cost
-cost_rebate
-impression
-click
-click_rate
-content_impression
-content_click
-content_click_rate
-impression_cost
-click_cost
-content_click_cost
-play_3s_rate
-play_5s_rate
-play_end_rate
-convert_count
-convert_rate
-convert_cost
-deep_convert_count
-deep_convert_rate
-deep_convert_cost
-app_download_start
-app_download_complete
-app_activation
-app_activation_cost
-app_activation_rate
-app_register
-app_register_cost
-app_register_rate
-app_event_pay_amount
-app_event_next_day_stay_rate
-event_pay_first_day
-event_pay_purchase_amount_first_day
-first_day_roi
-event_pay
-event_pay_cost
-form_count
-form_count_click_rate
-form_count_unit_price
-total_play
-valid_play
-valid_play_rate
-valid_play_cost
-play_25_rate
-play_50_rate
-play_75_rate
-play_100_feed_rate
-play_100_feed_break_rate
-play_duration_per_play
-wifi_play_rate
-event_new_user_pay
-event_new_user_pay_cost
-event_new_user_pay_ratio
-event_jin_jian_app
-event_jin_jian_app_cost
-event_new_user_jinjian_app
-event_new_user_jinjian_app_cost
-event_new_user_jinjian_app_roi
-event_credit_grant_app
-event_credit_grant_app_cost
-event_credit_grant_app_ratio
-event_new_user_credit_grant_app
-event_new_user_credit_grant_app_cost
-event_new_user_credit_grant_app_roi
-event_order_paid
-event_order_paid_roi
-event_order_paid_cost
-event_valid_clues
-event_valid_clues_cost
-merchant_reco_fans
-merchant_reco_fans_cost
-event_goods_view
-event_goods_view_cost
-event_jin_jian_landing_page
-event_jin_jian_landing_page_cost
-event_new_user_jinjian_page
-event_new_user_jinjian_page_cost
-event_new_user_jinjian_page_roi
-event_credit_grant_landing_page
-event_credit_grant_landing_page_cost
-event_credit_grant_landing_page_ratio
-event_new_user_credit_grant_page
-event_new_user_credit_grant_page_cost
-event_new_user_credit_grant_page_roi
-event_button_click
-event_button_click_rate
-event_button_click_cost
-event_get_through
-event_get_through_cost
-event_get_through_ratio
-share_count
-comment_count
-like_count
-add_follower_count
-complain_count
-hate_count
-negative_count
-cancel_follow
-ad_product_cnt
-event_add_wechat
-event_add_wechat_cost
-event_add_wechat_ratio
-app_event_next_day_stay
-app_event_next_day_stay_cost
+      ifnull(sum(cr.cost) 0) / 10000 as cost 
+      ifnull(sum((cost / 10000) / (1 + (eva.return_point / 100)))  0) / 10000 as cost_rebate
+      ifnull(sum(cr.impression) 0) as impression 
+      ifnull(sum(cr.click) 0) as click 
+      ifnull(sum(cost / 10000) /  sum(impression / 1000)   0) as impression_cost 
+      ifnull(sum(cost /10000) /sum(click)  0) as click_cost 
 
 
 
-           ${array.contain(dimArray,"event_new_user_pay")? ",ifnull(sum(event_new_user_pay),0) as event_new_user_pay" :""}  
-           ${array.contain(dimArray,"event_new_user_pay_cost")? ",ifnull(sum(cost/10000) / sum(event_new_user_pay),0) as event_new_user_pay_cost" :""}  
-           ${array.contain(dimArray,"event_new_user_pay_ratio")? ",ifnull(sum(event_new_user_pay) / sum(content_click),0) as event_new_user_pay_ratio" :""}  
-           ${array.contain(dimArray,"event_jin_jian_app")? ",ifnull(sum(event_jin_jian_app),0) as event_jin_jian_app" :""}  
-           ${array.contain(dimArray,"event_jin_jian_app_cost")? ",ifnull(sum(cost/10000) / sum(event_jin_jian_app),0) as event_jin_jian_app_cost" :""}  
-           ${array.contain(dimArray,"event_new_user_jinjian_app")? ",ifnull(sum(event_new_user_jinjian_app),0) as event_new_user_jinjian_app" :""}  
-           ${array.contain(dimArray,"event_new_user_jinjian_app_cost")? ",ifnull(sum(cost/10000) / sum(event_new_user_jinjian_app),0) as event_new_user_jinjian_app_cost" :""}  
-           ${array.contain(dimArray,"event_new_user_jinjian_app_roi")? ",ifnull(sum(event_new_user_jinjian_app) / (sum(convert_count) + sum(form_count)),0) as event_new_user_jinjian_app_roi" :""}  
-           ${array.contain(dimArray,"event_credit_grant_app")? ",ifnull(sum(event_credit_grant_app),0) as event_credit_grant_app" :""}  
-           ${array.contain(dimArray,"event_credit_grant_app_cost")? ",ifnull(sum(cost/10000) / sum(event_credit_grant_app),0) as event_credit_grant_app_cost" :""}  
-           ${array.contain(dimArray,"event_credit_grant_app_ratio")? ",ifnull(sum(event_credit_grant_app)/sum(event_jin_jian_app),0) as event_credit_grant_app_ratio" :""}  
-           ${array.contain(dimArray,"event_new_user_credit_grant_app")? ",ifnull(sum(event_new_user_credit_grant_app),0) as event_new_user_credit_grant_app" :""}  
-           ${array.contain(dimArray,"event_new_user_credit_grant_app_cost")? ",ifnull(sum(cost/10000) / sum(event_new_user_credit_grant_app),0) as event_new_user_credit_grant_app_cost" :""}  
-           ${array.contain(dimArray,"event_new_user_credit_grant_app_roi")? ",ifnull(sum(event_new_user_credit_grant_app) / (sum(convert_count) + sum(form_count)),0) as event_new_user_credit_grant_app_roi" :""}  
-           ${array.contain(dimArray,"event_order_paid")? ",ifnull(sum(event_order_paid),0) as event_order_paid" :""}  
-           ${array.contain(dimArray,"event_order_paid_roi")? ",ifnull(sum(event_order_paid) / sum(event_goods_view),0) as event_order_paid_roi" :""}  
-           ${array.contain(dimArray,"event_order_paid_cost")? ",ifnull(sum(cost/10000) / sum(event_order_paid),0) as event_order_paid_cost" :""}  
-           ${array.contain(dimArray,"event_valid_clues")? ",ifnull(sum(event_valid_clues),0) as event_valid_clues" :""}   
-           ${array.contain(dimArray,"event_valid_clues_cost")? ",ifnull(sum(cost/10000) / sum(event_valid_clues),0) as event_valid_clues_cost" :""}  
-           ${array.contain(dimArray,"merchant_reco_fans")? ",ifnull(sum(merchant_reco_fans),0) as merchant_reco_fans" :""}   
-           ${array.contain(dimArray,"merchant_reco_fans_cost")? ",ifnull(sum(cost/10000) / sum(merchant_reco_fans),0) as merchant_reco_fans_cost" :""}  
-           ${array.contain(dimArray,"event_goods_view")? ",ifnull(sum(event_goods_view),0) as event_goods_view" :""}  
-           ${array.contain(dimArray,"event_goods_view_cost")? ",ifnull(sum(cost/10000) / sum(event_goods_view),0) as event_goods_view_cost" :""}  
-           ${array.contain(dimArray,"event_jin_jian_landing_page")? ",ifnull(sum(event_jin_jian_landing_page),0) as event_jin_jian_landing_page" :""}  
-           ${array.contain(dimArray,"event_jin_jian_landing_page_cost")? ",ifnull(sum(cost/10000) / sum(event_jin_jian_landing_page),0) as event_jin_jian_landing_page_cost" :""}  
-           ${array.contain(dimArray,"event_new_user_jinjian_page")? ",ifnull(sum(event_new_user_jinjian_page),0) as event_new_user_jinjian_page" :""}  
-           ${array.contain(dimArray,"event_new_user_jinjian_page_cost")? ",ifnull(sum(cost/10000) / sum(event_new_user_jinjian_page),0) as event_new_user_jinjian_page_cost" :""}  
-           ${array.contain(dimArray,"event_new_user_jinjian_page_roi")? ",ifnull(sum(event_new_user_jinjian_page) / (sum(convert_count) + sum(form_count)),0) as event_new_user_jinjian_page_roi" :""}  
-           ${array.contain(dimArray,"event_credit_grant_landing_page")? ",ifnull(sum(event_credit_grant_landing_page),0) as event_credit_grant_landing_page" :""}  
-           ${array.contain(dimArray,"event_credit_grant_landing_page_cost")? ",ifnull(sum(cost/10000) / sum(event_credit_grant_landing_page),0) as event_credit_grant_landing_page_cost" :""}  
-           ${array.contain(dimArray,"event_credit_grant_landing_page_ratio")? ",ifnull(sum(event_credit_grant_landing_page) / sum(event_jin_jian_landing_page),0) as event_credit_grant_landing_page_ratio" :""}  
-           ${array.contain(dimArray,"event_new_user_credit_grant_page")? ",ifnull(sum(event_new_user_credit_grant_page),0) as event_new_user_credit_grant_page" :""}  
-           ${array.contain(dimArray,"event_new_user_credit_grant_page_cost")? ",ifnull(sum(cost/10000) / sum(event_new_user_credit_grant_page),0) as event_new_user_credit_grant_page_cost" :""}  
-           ${array.contain(dimArray,"event_new_user_credit_grant_page_roi")? ",ifnull(sum(event_new_user_credit_grant_page) / (sum(convert_count) + sum(form_count)),0) as event_new_user_credit_grant_page_roi" :""}  
-           ${array.contain(dimArray,"event_button_click")? ",ifnull(sum(event_button_click),0) as event_button_click" :""}  
-           ${array.contain(dimArray,"event_button_click_rate")? ",ifnull(sum(event_button_click) / sum(content_click),0) as event_button_click_rate" :""}  
-           ${array.contain(dimArray,"event_button_click_cost")? ",ifnull(sum(cost/10000) / sum(event_button_click),0) as event_button_click_cost" :""}  
-           ${array.contain(dimArray,"event_get_through")? ",ifnull(sum(event_get_through),0) as event_get_through" :""}  
-           ${array.contain(dimArray,"event_get_through_cost")? ",ifnull(sum(cost/10000) / sum(event_get_through),0) as event_get_through_cost" :""}  
-           ${array.contain(dimArray,"event_get_through_ratio")? ",ifnull(sum(event_get_through) / sum(content_click),0) as event_get_through_ratio" :""}  
-           ${array.contain(dimArray,"share_count")? ",ifnull(sum(share_count),0) as share_count" :""}  
-           ${array.contain(dimArray,"comment_count")? ",ifnull(sum(comment_count),0) as comment_count" :""}  
-           ${array.contain(dimArray,"like_count")? ",ifnull(sum(like_count),0) as like_count" :""}  
-           ${array.contain(dimArray,"add_follower_count")? ",ifnull(sum(add_follower_count),0) as add_follower_count" :""}  
-           ${array.contain(dimArray,"complain_count")? ",ifnull(sum(complain_count),0) as complain_count" :""}   
-           ${array.contain(dimArray,"hate_count")? ",ifnull(sum(hate_count),0) as hate_count" :""}   
-           ${array.contain(dimArray,"negative_count")? ",ifnull(sum(negative_count),0) as negative_count" :""}  
-           ${array.contain(dimArray,"cancel_follow")? ",ifnull(sum(cancel_follow),0) as cancel_follow" :""}  
-           ${array.contain(dimArray,"ad_product_cnt")? ",ifnull(sum(ad_product_cnt),0) as ad_product_cnt" :""}   
-           ${array.contain(dimArray,"event_add_wechat")? ",ifnull(sum(event_add_wechat),0) as event_add_wechat" :""}
-           ${array.contain(dimArray,"event_add_wechat_cost")? ",ifnull(sum(cost/10000) /sum(ad_product_cnt),0) as event_add_wechat_cost" :""}
-           ${array.contain(dimArray,"event_add_wechat_ratio")? ",ifnull(sum(event_add_wechat) / sum(content_click),0) as event_add_wechat_ratio" :""}
-           ${array.contain(dimArray,"app_event_next_day_stay")? ",ifnull(sum(app_event_next_day_stay),0) as app_event_next_day_stay" :""}
-           ${array.contain(dimArray,"app_event_next_day_stay_cost")? ",ifnull(sum(cost/10000) / sum(app_event_next_day_stay),0) as app_event_next_day_stay_cost" :""}
+
+    select cr.video_url as video_url
+      max(cr.video_name) as video_name
+ --    if(cr.video_url='未知'  '未知' max(ev.name))      as 媒体
+      if(cr.video_url='未知'  '未知'  max(pro.name)) as project -- 项目
+      if(cr.video_url='未知'  '未知'  max(vau.name)) as  video_designer -- 视频设计师
+      if(cr.video_url='未知'  '未知'  max(au.name)) as optimizer -- 优化师
+      if(cr.video_url='未知'  '未知'  max(mcau.name)) as  creator_crew  --  创作团队
+      sum(cr.cost)/10000 as cost -- 消耗金额
+      sum(cost_rebate)/10000 as cost_rebate --  返点后消耗
+      sum(cr.impression) as impression -- 封面曝光数
+      sum(cr.click) as click -- 封面点击数
+      if(sum(impression)<>0  sum(cost / 10000) /  sum(impression / 1000)   0) as impression_cost --  平均千次封面曝光花费
+      if(sum(click)<>0 sum(cost /10000) /sum(click)  0) as click_cost -- 平均封面点击单价
+      if(sum(content_impression)<>0 sum(play_3s_count)/sum(content_impression) 0) as play_3s_rate --  3秒视频播放率
+      if(sum(content_impression)<>0 sum(play_5s_count)/sum(content_impression) 0) as play_5s_rate -- 5秒视频播放率
+      if(sum(content_impression)<>0 sum(play_end_count)/sum(content_impression) 0) as play_end_rate -- 完播率
+      if(sum(total_play)<>0 sum(play_25_feed_break)/sum(total_play) 0) as play_25_rate --  25%进度播放数
+      if(sum(total_play)<>0 sum(play_50_feed_break)/sum(total_play) 0) as play_50_rate -- 50%进度播放数
+      if(sum(total_play)<>0 sum(play_75_feed_break)/sum(total_play) 0) as play_75_rate -- 75%进度播放数
+      if(sum(total_play)<>0 sum(play_100_feed_break)/sum(total_play) 0) as play_99_rate -- 99%进度播放数
+      if(sum(impression)<>0 sum(click)/sum(impression) 0) as click_rate -- 封面点击率
+      sum(cr.content_impression) as content_impression -- 素材曝光数
+      sum(cr.content_click) as content_click -- 行为数
+      if(sum(content_impression)!=0 sum(content_click)/sum(content_impression) 0) as content_click_rate -- 行为率
+      if(sum(click)<>0 sum(cost)/sum(click)/10000  0) as click_cost  -- 平均点击单价
+      if(sum(content_click)<>0 sum(cost)/sum(content_click)/10000 0) as content_click_cost -- 平均行为单价
+      sum(cr.app_download_start) as app_download_start --  安卓下载开始数
+      sum(cr.app_download_complete) as app_download_complete -- 安卓下载完成数
+      sum(cr.app_activation) as app_activation --  激活数
+      if(sum(app_activation)!=0 sum(cost)/sum(app_activation)/10000 0) as app_activation_cost --  激活单价
+      if(sum(click)!=0 sum(app_activation)/sum(click) 0) as app_activation_rate -- 激活率
+      sum(cr.app_register) as app_register -- 注册数
+      if(sum(app_register)!=0 sum(cost)/sum(app_register)/10000 0) as app_register_cost --  注册成本
+      if(sum(app_activation)!=0 sum(app_register)/sum(app_activation) 0) as app_register_rate -- 注册率
+      sum(cr.app_event_pay_amount/10000) as app_event_pay_amount -- 付费金额
+      if(sum(next_day_active_count)!=0 sum(app_event_next_day_stay)/sum(next_day_active_count) 0) as app_event_next_day_stay_rate -- 次日留存率
+      sum(cr.event_pay_first_day) as event_pay_first_day -- 首日付费次数
+      sum(cr.event_pay_purchase_amount_first_day)/10000 as event_pay_purchase_amount_first_day -- 首日付费金额
+      if(sum(cr.cost)<>0 sum(cr.event_pay_purchase_amount_first_day)/sum(cr.cost) 0) as first_day_roi --  首日ROI
+      sum(cr.event_pay) as event_pay -- 付费次数
+      if(sum(cr.event_pay)!=0 sum(cr.cost /10000)/sum(cr.event_pay) 0) as event_pay_cost -- 付费次数成本
+      sum(cr.form_count) as form_count -- '表单提交数'
+      if(sum(cr.form_count)!=0 sum(cr.cost)/sum(cr.form_count)/10000 0) as form_count_unit_price --  表单提交单价
+      if(sum(cr.content_click)!=0 sum(cr.form_count)/sum(cr.content_click) 0) as form_count_click_rate -- 表单提交点击率
+      sum(share_count) as share_count --  分享数
+      sum(comment_count) as comment_count -- 评论数
+      sum(like_count) as like_count -- 点赞数
+      sum(add_follower_count) as add_follower_count -- 新增关注数
+      sum(complain_count) as complain_count --  举报数
+      sum(hate_count) as hate_count --  拉黑数
+      sum(negative_count) as negative_count -- 减少此类作品数
+      sum(cr.convert_count) as convert_count -- 转化数
+      if(sum(cr.click)=0  0  sum(cr.convert_count)/sum(cr.click)) as convert_rate -- 转化率
+      if(sum(cr.convert_count)=0  0 sum(cr.cost /10000)/sum(cr.convert_count)) as convert_cost -- 转化成本
+      sum(cr.deep_convert_count) as deep_convert_count -- 深度转化次数
+      if(sum(cr.click)=0  0 sum(cr.deep_convert_count)/sum(cr.click)) as deep_convert_rate -- 深度转化率
+      if(sum(cr.deep_convert_count)=0  0 sum(cr.cost /10000)/sum(cr.deep_convert_count)) as deep_convert_cost -- 深度转化成本
+      if(sum(cr.total_play)=0  0 sum(cr.play_duration_sum)/sum(cr.total_play)) as play_duration_per_play -- 平均单次播放时长
+      if(sum(cr.total_play)=0  0 sum(cr.wifi_play)/sum(cr.total_play)) as wifi_play_rate -- WIFI播放占比 
+      sum(total_play) as total_play -- 播放数
+      sum(valid_play) as valid_play -- 有效播放数
+      if(sum(cr.total_play)=0  0 sum(cr.valid_play)/sum(cr.total_play)) as valid_play_rate-- 有效播放率
+      if(sum(cr.valid_play)=0  0 sum(cr.cost / 10000)/sum(cr.valid_play)) as valid_play_cost-- 有效播放成本
+      sum(cost) /10000 as cost1
+      sum(impression) as impression1
+      sum(click) as click1
+      sum(content_impression) as content_impression1
+      sum(play_3s_count) as play_3s_count1
+      sum(play_5s_count) as play_5s_count1
+      sum(play_end_count) as play_end_count1
+      sum(app_event_next_day_stay) as app_event_next_day_stay1
+      sum(content_click) as content_click1
+      sum(app_activation) as app_activation1
+      sum(next_day_active_count) as next_day_active_count1
+      sum(app_register) as app_register1
+      sum(app_event_next_day_stay) as app_event_next_day_stay1
+      sum(event_pay_purchase_amount_first_day) as event_pay_purchase_amount_first_day1
+      sum(event_pay) as event_pay1
+      sum(form_count) as form_count1
+      sum(play_25_feed_break) as play_25_feed_break1
+      sum(play_50_feed_break) as play_50_feed_break1
+      sum(play_75_feed_break) as play_75_feed_break1
+      sum(play_100_feed_break) as play_99_feed_break1
+      sum(total_play) as total_play1
+      sum(valid_play) as valid_play1
+	  sum(convert_count) as convert_count1
+	  sum(deep_convert_count) as deep_convert_count1
+      sum(play_duration_sum) as play_duration_sum1
+      sum(wifi_play) as wifi_play1
+from (
+            select date 
+  		   , eva.company_id  
+               , cr.vendor_id as vendor_id 
+               , video_account_id 
+               , project_id 
+               , creative_account_id 
+  		   , if((video_url='' or video_url is null)  '未知'  video_url) as video_url 
+ 		   , if((video_name='' or video_name is null)  '未知'  video_name) as video_name 
+               , material_market_creator_id 
+               , sum(cost)                                cost 
+               , sum(cost/ (1+ (return_point / 100)))                         cost_rebate 
+               , sum(impression)                          impression 
+               , sum(click)                               click 
+               , sum(content_impression)                  content_impression 
+               , sum(content_click)                       content_click 
+               , sum(app_download_start)                  app_download_start 
+               , sum(app_download_complete)               app_download_complete 
+               , sum(app_activation)                      app_activation 
+               , sum(next_day_active_count)                      next_day_active_count 
+               , sum(app_register)                        app_register 
+               , sum(app_event_pay)                       app_event_pay 
+               , sum(app_event_pay_amount)                app_event_pay_amount 
+               , sum(app_event_next_day_stay)             app_event_next_day_stay 
+               , sum(event_pay_first_day)                 event_pay_first_day 
+               , sum(event_pay_purchase_amount_first_day) event_pay_purchase_amount_first_day 
+               , sum(event_pay)                           event_pay 
+               , sum(form_count)                          form_count 
+               , sum(play_3s_count)                       play_3s_count 
+  		   , sum(play_5s_count)                       play_5s_count 
+               , sum(play_end_count)                      play_end_count 
+		   , sum(play_25_feed_break)  as play_25_feed_break  
+   		   , sum(play_50_feed_break) as play_50_feed_break 
+  		   , sum(play_75_feed_break) as play_75_feed_break 
+  		   , sum(play_100_feed_break) as play_100_feed_break  
+  		   , sum(total_play) as total_play 
+  		   , sum(valid_play) as valid_play 
+               , sum(share_count)                         share_count 
+               , sum(comment_count)                       comment_count 
+               , sum(like_count)                          like_count 
+               , sum(hate_count)                          hate_count 
+               , sum(add_follower_count)                  add_follower_count 
+               , sum(complain_count)                      complain_count 
+               , sum(negative_count)                      negative_count 
+  		   , sum(convert_count)                      convert_count 
+  		   , sum(deep_convert_count)                      deep_convert_count 
+  		   , sum(play_duration_sum)     		play_duration_sum 
+  		   , sum(wifi_play) as wifi_play
+         from makepolo.vendor_creative_report cr
+				left join makepolo.creative_report_dims dims 
+                           on dims.vendor_account_id = cr.vendor_account_id
+					      and dims.vendor_creative_id = cr.vendor_creative_id  ${isNotEmpty(company_id)? " and dims.company_id in (" + company_id + ")" : ""}
+  
+               left join makepolo.creative_material_dims m_dims
+                       on m_dims.vendor_material_id = cr.photo_id
+                        and m_dims.vendor_account_id = cr.vendor_account_id  ${isNotEmpty(company_id)? " and m_dims.company_id in (" + company_id + ")" : ""}
+               left join makepolo.entity_vendor_account eva on eva.id=cr.vendor_account_id
+         where date >= '${start_date}'
+           and date <= '${end_date}'
+  		   and cr.vendor_creative_id <>'0'
+          ${where}
+         group by 1  2  3  4  5  6  7  8  9
+     ) cr
+         left join makepolo_common.vendor ev on cr.vendor_id = ev.vendor_id
+         left join makepolo.project pro on cr.project_id = pro.id
+         left join makepolo_common.account_user au on cr.creative_account_id = au.id
+         left join makepolo_common.account_user vau on cr.video_account_id = vau.id
+         left join makepolo_common.account_admin mcau on cr.material_market_creator_id = mcau.id
+group by 1
