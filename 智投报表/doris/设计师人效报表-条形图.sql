@@ -76,7 +76,7 @@ from
    
         union all
     
-	    select  account_id
+	    select account_id
           , 0 as cost
  		  , count(1) as cnt
 	    from makepolo.local_material_video

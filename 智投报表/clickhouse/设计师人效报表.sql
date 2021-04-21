@@ -161,7 +161,7 @@ from (
           , count(1) as Cnt
       from makepolo.local_material_video
       where create_time>='${start_date} 00:00:00' 
-          and create_time<='${end_date} 23:59:59' ${where}
+          and create_time<='${end_date} 23:59:59'
       group by account_id, vendor_id ${isNotEmpty(is_dat) && is_dat == '0'  ? ", dat" : ""}
 
 ) a left join makepolo_common.account_user au on b.account_id = au.id
