@@ -16,10 +16,8 @@
  company_type = 0 需求方
  role_type = 1 导演
  role_type = 2 编剧
- 
  role_type = 3 摄像
  role_type = 4 后期
- 
  --  需求方 ${company_type =='1' ? "'需求方'":"'创作团队'"}     
 */
 
@@ -32,10 +30,10 @@ select
       , max(Company_name) as creator_name
       , max(Order_id) as order_id
       , max(Order_name) as order_name
-      , if(max(Director_name) ='','_', max(Director_name)) as director_name
-      , if(max(Writer_name) ='','_', max(Writer_name)) as writer_name
-      , if(max(Camerist_name) ='','_', max(Camerist_name)) as camerist_name
-      , if(max(Late_name) ='','_', max(Late_name)) as late_name
+      , if(max(Director_id)=0,'_', toString(max(Director_id))) as director_name
+      , if(max(Writer_id)=0,'_', toString(max(Writer_id))) as writer_name
+      , if(max(Camerist_id)=0,'_', toString(max(Camerist_id))) as camerist_name
+      , if(max(Late_producer_id)=0, '_', toString(max(Late_producer_id))) as late_name
       , sum(Cost) / 10000 as cost
       , sum(Content_impression) as content_impression_ks
       , sum(Impression) as content_impression_tt
@@ -67,7 +65,6 @@ select
       , ifNotFinite(valid_play / content_impression_tt, 0)  as valid_play_rate_tt
       , ifNotFinite(cost / valid_play, 0) as valid_play_cost
       , ifNotFinite(play_duration_sum / total_play, 0) as avg_play_duration
-  --    , round(play_end_count / 100) as play_end_count1
       , ifNotFinite(cost / convert_count, 0) as convert_cost
       , sum(Deep_convert_count) as deep_convert_count
       , sum(Content_click) as content_click
@@ -75,7 +72,6 @@ select
       , sum(Convert_count) as convert_count
       , ifNotFinite(convert_count / click, 0) as convert_rate
       , ifNotFinite(deep_convert_count / click, 0) as deep_convert_rate
--- ----------------------
       , sum(Play_3s_count) as play_3s_count
       , sum(Play_5s_count) as play_5s_count
       , sum(Play_7s_count) as play_7s_count
@@ -98,22 +94,22 @@ select
       , sum(Active_page_interaction_users)   active_page_interaction_users
       , sum(Join_chat_group_amount)  join_chat_group_amount
       , sum(Video_play_count)     video_play_count
-      , ifNotFinite(play_duration_sum / total_play, 0) video_outer_play_time_count -- 平均有效播放时长
+      , ifNotFinite(play_duration_sum / total_play, 0) video_outer_play_time_count 
       , sum(Video_outer_play_time_avg_rate) video_outer_play_time_avg_rate
-      , ifNotFinite(valid_play / impression, 0)  as video_outer_play_rate -- 有效播放率
+      , ifNotFinite(valid_play / impression, 0)  as video_outer_play_rate
 from (
      select replace_video_index
              , max(if(is_replace_video=0, material_market_video_url, null)) Video_url
              , max(if(is_replace_video=0, cover_image_url, null)) Cover_image_url
              , max(if(is_replace_video=0, market_video_name, null))  Video_title
-             , max(ev.name) Vendor_id
-             , max(ad.company_name)  Company_name
-        	   , max(order_name)            Order_name
-        	   , max(order_id)              Order_id
-             , max(director.name)     Director_name
-             , max(writer.name)       Writer_name
-             , max(camerist.name)     Camerist_name
-          	 , max(late.name)             Late_name
+             , max(vendor_id) Vendor_id
+             , ${company_type =='1' ? "max(company_id) as Company_name":"max(material_market_creator_id) as Company_name"} 
+        	 , max(order_name)            Order_name
+        	 , max(order_id)              Order_id
+             , max(director_id)     Director_id
+             , max(writer_id)       Writer_id
+             , max(camerist_id)     Camerist_id
+          	 , max(late_producer_id) Late_producer_id
              , sum(play_3s_count)         Play_3s_count
              , sum(play_5s_count)         Play_5s_count
              , sum(play_7s_count)         Play_7s_count
@@ -198,9 +194,9 @@ from (
                 , vr.valid_play             valid_play
                 , vr.click                  click
                 , vr.play_end_count         play_end_count
-        	      , vr.content_click          content_click
+        	    , vr.content_click          content_click
                 , vr.convert_count          convert_count
-        	      , vr.deep_convert_count     deep_convert_count
+        	    , vr.deep_convert_count     deep_convert_count
                 , vr.forward_count          forward_count
                 , vr.read_count 	           read_count
                 , vr.from_follow_uv         from_follow_uv
@@ -215,10 +211,10 @@ from (
            left join (select * from makepolo.entity_vendor_account where 1=1 ${company_type =='1' ? "":"and company_id in ("+ company_id +" )"}) eva on eva.id = vr.vendor_account_id
            global left join (
                     select * 
-                    from makepolo.market_video_dims 
+                    from makepolo.market_video_dims final
                     where 1=1 
                     ${company_type =='1' ? "and material_market_creator_id in ("+ company_id +" )":"and company_id in ("+ company_id +" )"}
-                    ${strutil.contain(demand_id!'-1', '-1') ? "":"and mv.company_id in ( "+ demand_id +" )"}
+                    ${strutil.contain(demand_id!'-1', '-1') ? "":"and company_id in ( "+ demand_id +" )"}
                     ${strutil.contain(owner_creator_id!'-1', '-1') ? "":"and material_market_creator_id in ( "+ owner_creator_id +" )"}
                     ${strutil.contain(order_id!'-1', '-1') ? "":"and material_market_order_id in ( "+ order_id +" )"}
                     ${strutil.contain(director_id!'-1', '-1') ? "":"and director_id in ( "+ director_id +" )"}  -- dims
@@ -240,21 +236,8 @@ from (
          ${strutil.contain(writer_id!'-1', '-1') ? "":"and mv.writer_id in ( "+ writer_id +" )"}        -- dims
          ${strutil.contain(camerist_id!'-1', '-1') ? "":"and mv.camerist_id in ( "+ camerist_id +" )"}  -- dims
          ${strutil.contain(late_producer_id!'-1', '-1') ? "":"and mv.late_producer_id in ( "+ late_producer_id +" )"}  -- dims
-         ${isNotEmpty(video_name)? "and market_video_name like '%" + video_name + "%'" : ""}
+         ${isNotEmpty(video_name)? "and mv.market_video_name like '%" + video_name + "%'" : ""}
       ) a
-        -- left join tidb_makepolo.material_market_video mmv on toInt64(a.material_video_id) = toInt64(mmv.id)
-        -- left join tidb_makepolo.material_market_order mmo on mmv.order_id = mmo.id
-        -- left join tidb_makepolo_common.account_user au on au.id = mmo.account_id
-         left join tidb_makepolo_common.account_admin ad on ${company_type =='1' ? "toInt64(a.company_id) = toInt64(ad.id)":"toInt64(a.material_market_creator_id) = toInt64(ad.id)"}  
-         left join (select id, name from tidb_makepolo.creator_role where id > 0) director on director.id = a.director_id
-         left join (select id, name from tidb_makepolo.creator_role where id > 0) writer on writer.id = a.writer_id
-         left join (select id, name from tidb_makepolo.creator_role where id > 0) camerist on camerist.id = a.camerist_id
-         left join (select id, name from tidb_makepolo.creator_role where id > 0) late on late.id = a.late_producer_id
-         left join tidb_makepolo_common.vendor ev on ev.vendor_id = a.vendor_id
-     -- ${company_type =='1' ? "and mmo.owner_creator_id in ("+ company_id +" )":""}
-     -- ${strutil.contain(demand_id!'-1', '-1') ? "":"and eva.company_id in ( "+ demand_id +" )"} -- 需求方id
-     -- ${strutil.contain(owner_creator_id!'-1', '-1') ? "":"and mmo.owner_creator_id in ( "+ owner_creator_id +" )"} -- 创作团队id
-     -- ${strutil.contain(order_id!'-1', '-1') ? "":"and mmv.order_id in ( "+ order_id +" )"}  -- 订单id
       group by replace_video_index
 
       union all
@@ -263,14 +246,14 @@ from (
              , max(if(is_replace_video=0, material_market_video_url, null)) Video_url
              , max(if(is_replace_video=0, cover_image_url, null)) Cover_image_url
              , max(if(is_replace_video=0, market_video_name, null))  Video_title
-             , max(ev.name) Vendor_id
-             , max(ad.company_name)  Company_name
-        	   , max(order_name)            Order_name
-        	   , max(order_id)              Order_id
-             , max(director.name)     Director_name
-             , max(writer.name)       Writer_name
-             , max(camerist.name)     Camerist_name
-          	 , max(late.name)             Late_name
+             , max(vendor_id) Vendor_id
+             , ${company_type =='1' ? "max(company_id) as Company_name":"max(material_market_creator_id) as Company_name"} 
+        	 , max(order_name)            Order_name
+        	 , max(order_id)              Order_id
+             , max(director_id)     Director_id
+             , max(writer_id)       Writer_id
+             , max(camerist_id)     Camerist_id
+          	 , max(late_producer_id) Late_producer_id
              , sum(play_3s_count)         Play_3s_count
              , sum(play_5s_count)         Play_5s_count
              , sum(play_7s_count)         Play_7s_count
@@ -355,9 +338,9 @@ from (
                 , vr.valid_play             valid_play
                 , vr.click                  click
                 , vr.play_end_count         play_end_count
-        	      , vr.content_click          content_click
+        	    , vr.content_click          content_click
                 , vr.convert_count          convert_count
-        	      , vr.deep_convert_count     deep_convert_count
+        	    , vr.deep_convert_count     deep_convert_count
                 , vr.forward_count          forward_count
                 , vr.read_count 	           read_count
                 , vr.from_follow_uv         from_follow_uv
@@ -368,14 +351,14 @@ from (
                 , vr.join_chat_group_amount   join_chat_group_amount
                 , vr.video_play_count      video_play_count
                 , vr.video_outer_play_time_avg_rate  video_outer_play_time_avg_rate
-           from makepolo.vendor_material_report vr
+           from makepolo.vendor_material_report vr final
            left join (select * from makepolo.entity_vendor_account where 1=1 ${company_type =='1' ? "":"and company_id in ("+ company_id +" )"}) eva on eva.id = vr.vendor_account_id
            global left join (
                     select * 
-                    from makepolo.market_video_dims 
+                    from makepolo.market_video_dims final
                     where 1=1 
                     ${company_type =='1' ? "and material_market_creator_id in ("+ company_id +" )":"and company_id in ("+ company_id +" )"}
-                    ${strutil.contain(demand_id!'-1', '-1') ? "":"and mv.company_id in ( "+ demand_id +" )"}
+                    ${strutil.contain(demand_id!'-1', '-1') ? "":"and company_id in ( "+ demand_id +" )"}
                     ${strutil.contain(owner_creator_id!'-1', '-1') ? "":"and material_market_creator_id in ( "+ owner_creator_id +" )"}
                     ${strutil.contain(order_id!'-1', '-1') ? "":"and material_market_order_id in ( "+ order_id +" )"}
                     ${strutil.contain(director_id!'-1', '-1') ? "":"and director_id in ( "+ director_id +" )"}  -- dims
@@ -397,21 +380,8 @@ from (
          ${strutil.contain(writer_id!'-1', '-1') ? "":"and mv.writer_id in ( "+ writer_id +" )"}        -- dims
          ${strutil.contain(camerist_id!'-1', '-1') ? "":"and mv.camerist_id in ( "+ camerist_id +" )"}  -- dims
          ${strutil.contain(late_producer_id!'-1', '-1') ? "":"and mv.late_producer_id in ( "+ late_producer_id +" )"}  -- dims
-         ${isNotEmpty(video_name)? "and market_video_name like '%" + video_name + "%'" : ""}
+         ${isNotEmpty(video_name)? "and mv.market_video_name like '%" + video_name + "%'" : ""}
       ) a
-        -- left join tidb_makepolo.material_market_video mmv on toInt64(a.material_video_id) = toInt64(mmv.id)
-        -- left join tidb_makepolo.material_market_order mmo on mmv.order_id = mmo.id
-        -- left join tidb_makepolo_common.account_user au on au.id = mmo.account_id
-         left join tidb_makepolo_common.account_admin ad on ${company_type =='1' ? "toInt64(a.company_id) = toInt64(ad.id)":"toInt64(a.material_market_creator_id) = toInt64(ad.id)"}  
-         left join (select id, name from tidb_makepolo.creator_role where id > 0) director on director.id = a.director_id
-         left join (select id, name from tidb_makepolo.creator_role where id > 0) writer on writer.id = a.writer_id
-         left join (select id, name from tidb_makepolo.creator_role where id > 0) camerist on camerist.id = a.camerist_id
-         left join (select id, name from tidb_makepolo.creator_role where id > 0) late on late.id = a.late_producer_id
-         left join tidb_makepolo_common.vendor ev on ev.vendor_id = a.vendor_id
-     -- ${company_type =='1' ? "and mmo.owner_creator_id in ("+ company_id +" )":""}
-     -- ${strutil.contain(demand_id!'-1', '-1') ? "":"and eva.company_id in ( "+ demand_id +" )"} -- 需求方id
-     -- ${strutil.contain(owner_creator_id!'-1', '-1') ? "":"and mmo.owner_creator_id in ( "+ owner_creator_id +" )"} -- 创作团队id
-     -- ${strutil.contain(order_id!'-1', '-1') ? "":"and mmv.order_id in ( "+ order_id +" )"}  -- 订单id
       group by replace_video_index
  ) creative
 group by replace_video_index

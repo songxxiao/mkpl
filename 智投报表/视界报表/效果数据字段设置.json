@@ -1,145 +1,50 @@
 [
     {
-        "key": "material_video_id",
-        "subQuery": {}
-    },
-    {
-        "key": "video_url",
-        "title": "视频链接",
-        "subQuery": {}
-    },
-    {
-        "key": "video_title",
-        "title": "视频标题",
-        "subQuery": {}
-    },
-    {
-        "key": "vendor_id",
-        "title": "媒体",
-        "subQuery": {}
-    },
-    {
-        "key": "name",
-        "title": "",
-        "subQuery": {}
-    },
-    {
-        "key": "director_name",
-        "title": "导演",
-        "subQuery": {}
-    },
-    {
-        "key": "writer_name",
-        "title": "编剧",
-        "subQuery": {}
-    },
-    {
-        "key": "camerist_name",
-        "title": "摄像",
-        "subQuery": {}
-    },
-    {
-        "key": "late_name",
-        "title": "后期",
-        "subQuery": {}
-    },
-    {
-        "key": "cost",
-        "title": "消耗金额",
-        "formatter": "0,000.000",
-        "subQuery": {}
-    },
-    {
-        "key": "content_impression_ks",
-        "title": "素材曝光数"
-
-    },
-    {
-        "key": "content_impression_tt",
-        "title": "展示数"
-    },
-    {
-        "key": "play_3s_rate_ks",
-        "formatter": "0.00%",
-        "title":"3秒播放率"
-    },
-    {
-        "key": "play_3s_rate_tt",
-        "formatter": "0.00%",
-        "title":"3秒播放率"
-    },
-    {
-        "key": "play_5s_rate_ks",
-        "formatter": "0.00%",
-        "title":"5秒播放率"
-    },
-    {
-        "key": "play_5s_rate_tt",
-        "formatter": "0.00%",
-        "title":"5秒播放率"
-    },
-    {
-        "key": "play_end_rate_ks",
-        "formatter": "0.00%",
-        "title":"完整播放率"
-    },
-    {
-        "key": "play_end_rate_tt",
-        "formatter": "0.00%",
-        "title":"完整播放率"
-    },
-    {
-        "key": "share_count",
-        "title": "分享数",
-        "subQuery": {}
-    },
-    {
         "key": "comment_count",
+        "formatter": "0,000",
         "title": "评论数",
         "subQuery": {}
     },
     {
-        "key": "like_count",
-        "title": "点赞数",
+        "key": "play_95_feed_break",
+        "formatter": "0,000",
+        "title": "95%进度播放量",
         "subQuery": {}
     },
     {
-        "key": "add_follower_count",
-        "title": "新增关注数",
+        "key": "video_outer_play_time_avg_rate",
+        "formatter": "0.00%",
+        "title": "平均有效播放进度",
+        "subQuery": {}
+    },
+    {
+        "key": "valid_play_cost",
+        "formatter": "0,000.00",
+        "title": "有效播放成本",
+        "subQuery": {}
+    },
+    {
+        "key": "play_75_feed_break",
+        "formatter": "0,000",
+        "title": "75%进度播放量",
         "subQuery": {}
     },
     {
         "key": "complain_count",
+        "formatter": "0,000",
         "title": "举报数",
         "subQuery": {}
     },
     {
-        "key": "negative_count",
-        "title": "减少此类作品数",
+        "key": "forward_count",
+        "formatter": "0,000",
+        "title": "转发量",
         "subQuery": {}
     },
     {
-        "key": "hate_count",
-        "title": "拉黑数",
-        "subQuery": {}
-    },
-    {
-        "key": "cover_image_url"
-    },
-    {
-        "key": "total_play",
-        "title": "播放数",
-        "subQuery": {}
-    },
-    {
-        "key": "valid_play",
-        "title": "有效播放数",
-        "subQuery": {}
-    },
-    {
-        "key": "play_25_rate",
+        "key": "deep_convert_rate",
         "formatter": "0.00%",
-        "title": " 25%进度播放率",
+        "title": "深度转化率",
         "subQuery": {}
     },
     {
@@ -149,10 +54,168 @@
         "subQuery": {}
     },
     {
-        "key": "play_75_rate",
+        "key": "valid_play_rate_ks",
         "formatter": "0.00%",
-        "title": "75%进度播放率",
+        "title": " 有效播放率",
         "subQuery": {}
+    },
+    {
+        "key": "play_end_count",
+        "formatter": "0,000",
+        "title": " 完整播放数",
+        "subQuery": {}
+    },
+    {
+        "key": "convert_count1",
+        "subQuery": {}
+    },
+    {
+        "key": "cover_img_url",
+        "title": "视频封面",
+        "subQuery": {}
+    },
+    {
+        "key": "play_25_feed_break",
+        "formatter": "0,000",
+        "title": "25%进度播放量",
+        "subQuery": {}
+    },
+    {
+        "key": "click_rate_tt",
+        "formatter": "0.00%",
+        "title": " 点击率",
+        "subQuery": {}
+    },
+    {
+        "key": "active_page_viewers",
+        "formatter": "0,000",
+        "title": "活动页面访问人数",
+        "subQuery": {}
+    },
+    {
+        "key": "play_3s_rate_tt",
+        "formatter": "0.00%",
+        "title": "3秒播放率",
+        "subQuery": {}
+    },
+    {
+        "key": "material_video_id",
+        "title": "id",
+        "subQuery": {}
+    },
+    {
+        "key": "play_25_rate",
+        "formatter": "0.00%",
+        "title": " 25%进度播放率",
+        "subQuery": {}
+    },
+    {
+        "key": "active_page_interaction_amount",
+        "formatter": "0,000",
+        "title": "活动页面互动量",
+        "subQuery": {}
+    },
+    {
+        "key": "valid_play1",
+        "subQuery": {}
+    },
+    {
+        "key": "play_5s_rate_ks",
+        "formatter": "0.00%",
+        "title": "5秒播放率",
+        "subQuery": {}
+    },
+    {
+        "key": "play_25_feed_break1",
+        "subQuery": {}
+    },
+    {
+        "key": "read_count",
+        "formatter": "0,000",
+        "title": "阅读量",
+        "subQuery": {}
+    },
+    {
+        "key": "from_follow_uv",
+        "formatter": "0,000",
+        "title": "公众号关注量",
+        "subQuery": {}
+    },
+    {
+        "key": "deep_convert_count1",
+        "subQuery": {}
+    },
+    {
+        "key": "like_count",
+        "formatter": "0,000",
+        "title": "点赞数",
+        "subQuery": {}
+    },
+    {
+        "key": "total_play1",
+        "subQuery": {}
+    },
+    {
+        "key": "play_50_feed_break",
+        "formatter": "0,000",
+        "title": "50%进度播放量",
+        "subQuery": {}
+    },
+    {
+        "key": "play_end_rate_tt",
+        "formatter": "0.00%",
+        "title": "完整播放率",
+        "subQuery": {}
+    },
+    {
+        "key": "camerist_name",
+        "title": "摄像",
+        "subQuery": {
+            "id": "1167"
+        }
+    },
+    {
+        "key": "click",
+        "formatter": "0,000",
+        "title": "点击数",
+        "subQuery": {}
+    },
+    {
+        "key": "convert_count",
+        "formatter": "0,000",
+        "title": "转化数",
+        "subQuery": {}
+    },
+    {
+        "key": "video_title",
+        "title": "视频名称",
+        "subQuery": {}
+    },
+    {
+        "key": "play_10_feed_break",
+        "formatter": "0,000",
+        "title": "10%进度播放量",
+        "subQuery": {}
+    },
+    {
+        "key": "vendor_id",
+        "title": "媒体",
+        "subQuery": {
+            "id": "659"
+        }
+    },
+    {
+        "key": "impression",
+        "formatter": "0,000",
+        "title": " 曝光量",
+        "subQuery": {}
+    },
+    {
+        "key": "demand_name",
+        "title": "需求方",
+        "subQuery": {
+            "id": "1169"
+        }
     },
     {
         "key": "play_100_rate",
@@ -161,44 +224,247 @@
         "subQuery": {}
     },
     {
-        "key": "click",
-        "title": "点击数",
+        "key": "order_id",
+        "title": "订单ID",
         "subQuery": {}
     },
     {
-        "key": "click_rate",
+        "key": "total_play",
+        "formatter": "0,000",
+        "title": "播放数",
+        "subQuery": {}
+    },
+    {
+        "key": "writer_name",
+        "title": "编剧",
+        "subQuery": {
+            "id": "1167"
+        }
+    },
+    {
+        "key": "play_end_rate_ks",
         "formatter": "0.00%",
-        "title": " 点击率",
+        "title": "完整播放率",
         "subQuery": {}
     },
     {
-        "key": "valid_play_rate",
+        "key": "play_3s_count1",
+        "subQuery": {}
+    },
+    {
+        "key": "play_end_count1",
+        "subQuery": {}
+    },
+    {
+        "key": "play_5s_count1",
+        "subQuery": {}
+    },
+    {
+        "key": "cover_image_url",
+        "title": "视频封面url",
+        "subQuery": {}
+    },
+    {
+        "key": "content_impression1",
+        "subQuery": {}
+    },
+    {
+        "key": "video_outer_play_time_count",
+        "formatter": "0,000",
+        "title": "平均有效播放时长",
+        "subQuery": {}
+    },
+    {
+        "key": "order_name",
+        "title": "订单名称",
+        "subQuery": {}
+    },
+    {
+        "key": "late_name",
+        "title": "后期",
+        "subQuery": {
+            "id": "1167"
+        }
+    },
+    {
+        "key": "play_3s_count",
+        "formatter": "0,000",
+        "title": "3s播放完成量",
+        "subQuery": {}
+    },
+    {
+        "key": "play_5s_count",
+        "formatter": "0,000",
+        "title": "5s播放完成量",
+        "subQuery": {}
+    },
+    {
+        "key": "play_7s_count",
+        "formatter": "0,000",
+        "title": "7s播放完成量",
+        "subQuery": {}
+    },
+    {
+        "key": "play_75_rate",
+        "formatter": "0.00%",
+        "title": "75%进度播放率",
+        "subQuery": {}
+    },
+    {
+        "key": "play_duration_sum",
+        "formatter": "0,000",
+        "title": "播放时长",
+        "subQuery": {}
+    },
+    {
+        "key": "valuable_click_rate",
+        "formatter": "0.00%",
+        "title": "可转化点击率",
+        "subQuery": {}
+    },
+    {
+        "key": "video_url",
+        "title": "视频链接",
+        "subQuery": {}
+    },
+    {
+        "key": "play_100_feed_break",
+        "formatter": "0,000",
+        "title": "100%进度播放量",
+        "subQuery": {}
+    },
+    {
+        "key": "video_play_count",
+        "formatter": "0,000",
+        "title": "朋友圈视频播放次数",
+        "subQuery": {}
+    },
+    {
+        "key": "replace_video_index",
+        "subQuery": {}
+    },
+    {
+        "key": "content_click",
+        "formatter": "0,000",
+        "title": "行为数",
+        "subQuery": {}
+    },
+    {
+        "key": "play_100_feed_break1",
+        "subQuery": {}
+    },
+    {
+        "key": "negative_count",
+        "formatter": "0,000",
+        "title": "减少此类作品数",
+        "subQuery": {}
+    },
+    {
+        "key": "convert_rate",
+        "formatter": "0.00%",
+        "title": "转化率",
+        "subQuery": {}
+    },
+    {
+        "key": "content_impression_ks",
+        "formatter": "0,000",
+        "title": "素材曝光数",
+        "subQuery": {}
+    },
+    {
+        "key": "active_page_views",
+        "formatter": "0,000",
+        "title": "活动页面访问量",
+        "subQuery": {}
+    },
+    {
+        "key": "valid_play",
+        "formatter": "0,000",
+        "title": "有效播放数",
+        "subQuery": {}
+    },
+    {
+        "key": "hate_count",
+        "formatter": "0,000",
+        "title": "拉黑数",
+        "subQuery": {}
+    },
+    {
+        "key": "add_follower_count",
+        "formatter": "0,000",
+        "title": "新增关注数",
+        "subQuery": {}
+    },
+    {
+        "key": "play_duration_sum1",
+        "subQuery": {}
+    },
+    {
+        "key": "cost",
+        "formatter": "0,000.00",
+        "title": "消耗金额",
+        "subQuery": {}
+    },
+    {
+        "key": "play_5s_rate_tt",
+        "formatter": "0.00%",
+        "title": "5秒播放率",
+        "subQuery": {}
+    },
+    {
+        "key": "valid_play_rate_tt",
         "formatter": "0.00%",
         "title": " 有效播放率",
         "subQuery": {}
     },
     {
-        "key": "valid_play_cost",
-        "title": "有效播放成本",
+        "key": "video_outer_play_rate",
+        "formatter": "0.00%",
+        "title": "有效播放率",
+        "subQuery": {}
+    },
+    {
+        "key": "click_rate_ks",
+        "formatter": "0.00%",
+        "title": " 点击率",
         "subQuery": {}
     },
     {
         "key": "avg_play_duration",
-        "title": "平均播放时长(单位ms)",
+        "formatter": "0,000.00",
+        "title": "平均单次播放时长",
         "subQuery": {}
     },
     {
-        "key": "play_end_count",
-        "title": " 完整播放数",
+        "key": "play_3s_rate_ks",
+        "formatter": "0.00%",
+        "title": "3秒播放率",
         "subQuery": {}
     },
     {
-        "key": "deep_convert_count",
+        "key": "play_75_feed_break1",
         "subQuery": {}
     },
     {
-        "key": "content_click",
-        "title": "行为数",
+        "key": "share_count",
+        "formatter": "0,000",
+        "title": "分享数",
+        "subQuery": {}
+    },
+    {
+        "key": "content_impression_tt",
+        "formatter": "0,000",
+        "title": "展示数",
+        "subQuery": {}
+    },
+    {
+        "key": "play_50_feed_break1",
+        "subQuery": {}
+    },
+    {
+        "key": "join_chat_group_amount",
+        "formatter": "0,000",
+        "title": "加群成功量",
         "subQuery": {}
     },
     {
@@ -208,75 +474,41 @@
         "subQuery": {}
     },
     {
-        "key": "convert_count",
+        "key": "convert_cost",
+        "formatter": "0,000.000",
+        "title": " 转化成本",
         "subQuery": {}
     },
     {
-        "key": "convert_rate",
+        "key": "deep_convert_count",
+        "formatter": "0,000",
+        "title": "深度转化数",
         "subQuery": {}
     },
     {
-        "key": "deep_convert_rate",
+        "key": "director_name",
+        "title": "导演",
+        "subQuery": {
+            "id": "1167"
+        }
+    },
+    {
+        "key": "active_page_interaction_users",
+        "formatter": "0,000",
+        "title": "活动页面互动人数",
         "subQuery": {}
     },
     {
-        "key": "play_3s_count1",
-        "subQuery": {}
+        "key": "creator_name",
+        "title": "创作团队",
+        "subQuery": {
+            "id": "1169"
+        }
     },
     {
-        "key": "play_5s_count1",
-        "subQuery": {}
-    },
-    {
-        "key": "play_end_count1",
-        "subQuery": {}
-    },
-    {
-        "key": "content_impression1",
-        "subQuery": {}
-    },
-    {
-        "key": "valid_play1"
-    },
-    {
-        "key": "play_25_feed_break1",
-        "subQuery": {}
-    },
-    {
-        "key": "play_50_feed_break1",
-        "subQuery": {}
-    },
-    {
-        "key": "play_75_feed_break1",
-        "subQuery": {}
-    },
-    {
-        "key": "play_100_feed_break1",
-        "subQuery": {}
-    },
-    {
-        "key": "play_75_feed_break",
-        "subQuery": {}
-    },
-    {
-        "key": "content_impression",
-        "title": "素材曝光数",
-        "subQuery": {}
-    },
-    {
-        "key": "cover_img_url",
-        "title": "视频封面",
-        "subQuery": {}
-    },
-    {
-        "key": "video_name",
-        "subQuery": {}
-    },
-    {
-        "key": "play_5s_rate",
-        "formatter": "0.00%",
-        "title": "5秒播放率",
+        "key": "valuable_click_count",
+        "formatter": "0,000",
+        "title": "可转化点击次数",
         "subQuery": {}
     }
 ]
-
