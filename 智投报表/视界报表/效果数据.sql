@@ -18,7 +18,6 @@
  role_type = 2 编剧
  role_type = 3 摄像
  role_type = 4 后期
- --  需求方 ${company_type =='1' ? "'需求方'":"'创作团队'"}     
 */
 
 select
@@ -217,9 +216,9 @@ from (
                     ${strutil.contain(demand_id!'-1', '-1') ? "":"and company_id in ( "+ demand_id +" )"}
                     ${strutil.contain(owner_creator_id!'-1', '-1') ? "":"and material_market_creator_id in ( "+ owner_creator_id +" )"}
                     ${strutil.contain(order_id!'-1', '-1') ? "":"and material_market_order_id in ( "+ order_id +" )"}
-                    ${strutil.contain(director_id!'-1', '-1') ? "":"and director_id in ( "+ director_id +" )"}  -- dims
-                    ${strutil.contain(writer_id!'-1', '-1') ? "":"and writer_id in ( "+ writer_id +" )"}        -- dims
-                    ${strutil.contain(camerist_id!'-1', '-1') ? "":"and camerist_id in ( "+ camerist_id +" )"}  -- dims
+                    ${strutil.contain(director_id!'-1', '-1') ? "":"and director_id in ( "+ director_id +" )"} 
+                    ${strutil.contain(writer_id!'-1', '-1') ? "":"and writer_id in ( "+ writer_id +" )"}      
+                    ${strutil.contain(camerist_id!'-1', '-1') ? "":"and camerist_id in ( "+ camerist_id +" )"} 
                     ${strutil.contain(late_producer_id!'-1', '-1') ? "":"and late_producer_id in ( "+ late_producer_id +" )"} 
                     ${isNotEmpty(video_name)? "and material_market_video_name like '%" + video_name + "%'" : ""}
                 ) mv on vr.photo_id = mv.vendor_material_id and toInt64(eva.company_id) = toInt64(mv.company_id)
@@ -361,9 +360,9 @@ from (
                     ${strutil.contain(demand_id!'-1', '-1') ? "":"and company_id in ( "+ demand_id +" )"}
                     ${strutil.contain(owner_creator_id!'-1', '-1') ? "":"and material_market_creator_id in ( "+ owner_creator_id +" )"}
                     ${strutil.contain(order_id!'-1', '-1') ? "":"and material_market_order_id in ( "+ order_id +" )"}
-                    ${strutil.contain(director_id!'-1', '-1') ? "":"and director_id in ( "+ director_id +" )"}  -- dims
-                    ${strutil.contain(writer_id!'-1', '-1') ? "":"and writer_id in ( "+ writer_id +" )"}        -- dims
-                    ${strutil.contain(camerist_id!'-1', '-1') ? "":"and camerist_id in ( "+ camerist_id +" )"}  -- dims
+                    ${strutil.contain(director_id!'-1', '-1') ? "":"and director_id in ( "+ director_id +" )"} 
+                    ${strutil.contain(writer_id!'-1', '-1') ? "":"and writer_id in ( "+ writer_id +" )"}        
+                    ${strutil.contain(camerist_id!'-1', '-1') ? "":"and camerist_id in ( "+ camerist_id +" )"} 
                     ${strutil.contain(late_producer_id!'-1', '-1') ? "":"and late_producer_id in ( "+ late_producer_id +" )"} 
                     ${isNotEmpty(video_name)? "and material_market_video_name like '%" + video_name + "%'" : ""}
                 ) mv on vr.photo_id = mv.vendor_material_id and toInt64(eva.company_id) = toInt64(mv.company_id)
@@ -375,11 +374,11 @@ from (
          ${company_type =='1' ? "and mv.material_market_creator_id in ("+ company_id +" )":"and mv.company_id in ("+ company_id +" )"}
          ${strutil.contain(demand_id!'-1', '-1') ? "":"and mv.company_id in ( "+ demand_id +" )"}
          ${strutil.contain(owner_creator_id!'-1', '-1') ? "":"and mv.material_market_creator_id in ( "+ owner_creator_id +" )"}
-         ${strutil.contain(order_id!'-1', '-1') ? "":"and mv.material_market_order_id in ( "+ order_id +" )"}  -- 订单id
-         ${strutil.contain(director_id!'-1', '-1') ? "":"and mv.director_id in ( "+ director_id +" )"}  -- dims
-         ${strutil.contain(writer_id!'-1', '-1') ? "":"and mv.writer_id in ( "+ writer_id +" )"}        -- dims
-         ${strutil.contain(camerist_id!'-1', '-1') ? "":"and mv.camerist_id in ( "+ camerist_id +" )"}  -- dims
-         ${strutil.contain(late_producer_id!'-1', '-1') ? "":"and mv.late_producer_id in ( "+ late_producer_id +" )"}  -- dims
+         ${strutil.contain(order_id!'-1', '-1') ? "":"and mv.material_market_order_id in ( "+ order_id +" )"}  
+         ${strutil.contain(director_id!'-1', '-1') ? "":"and mv.director_id in ( "+ director_id +" )"}  
+         ${strutil.contain(writer_id!'-1', '-1') ? "":"and mv.writer_id in ( "+ writer_id +" )"}    
+         ${strutil.contain(camerist_id!'-1', '-1') ? "":"and mv.camerist_id in ( "+ camerist_id +" )"}  
+         ${strutil.contain(late_producer_id!'-1', '-1') ? "":"and mv.late_producer_id in ( "+ late_producer_id +" )"}  
          ${isNotEmpty(video_name)? "and mv.market_video_name like '%" + video_name + "%'" : ""}
       ) a
       group by replace_video_index
